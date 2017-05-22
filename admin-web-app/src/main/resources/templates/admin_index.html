@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html ng-app="adminApp" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" id="html">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>中国鞋材供应</title>
+    <link rel="shortcut icon" href="image/logo.png"/>
+    <!-- Load CSS files-->
+
+    <link href="../static/css/common/bootstrap.min.css" rel="stylesheet" th:href="@{/css/common/bootstrap.min.css}"/>
+    <link href="../static/css/common/bootstrap-datetimepicker.min.css" rel="stylesheet" th:href="@{/css/common/bootstrap-datetimepicker.min.css}"/>
+    <link href="../static/css/common/font-awesome.css" rel="stylesheet" th:href="@{/css/common/font-awesome.css}"/>
+    <link href="../static/css/common/bootstrap-spinner.css" rel="stylesheet" th:href="@{/css/common/bootstrap-spinner.css}"/>
+    <link href="../static/css/angular/angular-ui-tree.min.css" rel="stylesheet" th:href="@{/css/angular/angular-ui-tree.min.css}"/>
+    <link href="../static/css/common/common.css" rel="stylesheet" th:href="@{/css/common/common.css}"/>
+    <link href="../static/css/common/common-admin.css" rel="stylesheet" th:href="@{/css/common/common-admin.css}"/>
+    <link href="../static/css/common/style.css" rel="stylesheet" th:href="@{/css/common/style.css}"/>
+<!--     <link href="../static/css/common/AdminLTE.min.css" rel="stylesheet" th:href="@{/css/common/AdminLTE.min.css}"/>
+ -->
+</head>
+<body id="body">
+	<header>
+	    <!--顶部导航-->
+	    <div class="top_nav">
+	        <!--name and logo-->
+	        <div class="fl nav_brand admin-header-logo">
+	        	<img src="images/adminlogo.png" class="brand_logo" th:src="@{/images/adminlogo.png}"/>	        
+ 			</div>
+	        <!--the login information of user-->
+	        <div class="fr user_info">
+	            <form id="logoutForm" th:action="${@environment.getProperty('logout.url')}" method="post" class="logout">
+	                <span>您好,
+	                        <span id="login_nickname" uisref="profile"
+                                  class="login-account-span" ng-bind="loginUser_name"></span>
+	                </span>
+	                <span class="" th:inline="text"></span>
+	                <img id="logout_img" title="退出" onclick="clearCookiesAndLogout();" src="images/exit_icon.png"/>
+	            </form>
+	        </div>
+	    </div>
+	    <div class="clear_float"></div>
+	</header>
+	<div class="index_Layout">
+		<div style="width:15%" class="left_side_nav" id="left_side_nav">
+			<div class="left_side_nav_div">
+			
+	        	<!-- 左侧导航菜单栏 -->
+ 	        	<div class="left_side_nav_div_div">
+	            	<leftnav><div class="width:0px;"><img src="images/loading.gif" style="position:absolute;display:none;"  th:src="@{/images/loading.gif}"  id="firstAccessLoading"/></div></leftnav>
+	            </div>
+				<div class="clear_float"></div>
+		        <div class="nav_hide" id="nav_hide">
+					<span class="hide_left_icon" id="hide_left_icon">
+			   			<span class="hide_left_icon_first glyphicon glyphicon-chevron-left"></span>
+			   			<span class="glyphicon glyphicon-chevron-left"></span>
+					</span>
+					<div class="clear_float"></div>
+				</div>
+			</div>
+	    </div>
+		<div class="clear_float"></div>
+			<div style="width:85%"  class="child-content fr" id="childContent" data-ui-view=""></div>
+		</div>
+	<!-- 公共提示框 -->
+	<!-- 此处bs-example-modal-lg modal-lg 样式将模态框设置为大框 ，如果为bs-example-modal-sm modal-sm即为小框-->
+	<div class="modal fade bs-example-modal-sm" id="alert_dialog" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+		<div id="modal_dialog" class="modal-dialog modal-sm">
+			<div class="modal-content commom-modal-dialog">
+				<div id="dialog_header" class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>			
+					</button>
+					<h4 class="modal-title">[Title]</h4>
+				</div>
+				<div class="modal-body">
+				    <p>[Message]</p>
+				</div>
+				<div class="modal-footer">
+				    <button type="button" id="dialog_ok_button" class="btn btn-primary ok" data-dismiss="modal">
+				    [BtnOk]
+				    </button>
+	 			    <button type="button" id="dialog_cancel_button" class="btn btn-default cancel" data-dismiss="modal">
+				    [BtnCancel]
+				    </button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear_float"></div>
+
+<!-- Load plugin js file-->
+<script src="../static/js/plugin/jquery/jquery-1.min.js" th:src="@{/js/plugin/jquery/jquery-1.min.js}"></script>
+<script src="../static/js/plugin/jquery/jquery.cookie.js" th:src="@{/js/plugin/jquery/jquery.cookie.js}"></script>
+<script src="../static/js/plugin/bootstrap/bootstrap.min.js" th:src="@{/js/plugin/bootstrap/bootstrap.min.js}"></script>
+<script src="../static/js/plugin/bootstrap/bootstrap-datetimepicker.min.js" th:src="@{/js/plugin/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<script src="../static/js/plugin/angular/angular.js" th:src="@{/js/plugin/angular/angular.js}"></script>
+<script src="../static/js/plugin/angular/angular-route.js" th:src="@{/js/plugin/angular/angular-route.js}"></script>
+<script src="../static/js/plugin/angular/angular-resource.js" th:src="@{/js/plugin/angular/angular-resource.js}"></script>
+<script src="../static/js/plugin/angular/angular-ui-router.js" th:src="@{/js/plugin/angular/angular-ui-router.js}"></script>
+<script src="../static/js/plugin/angular/angular-ui-tree.js" th:src="@{/js/plugin/angular/angular-ui-tree.js}"></script>
+<script src="../static/js/plugin/angular/angular-ui-tree.min.js" th:src="@{/js/plugin/angular/angular-ui-tree.min.js}"></script>
+<script src="../static/js/plugin/angular/angular-file-upload-shim.min.js" th:src="@{/js/plugin/angular/angular-file-upload-shim.min.js}"></script>
+<script src="../static/js/plugin/angular/angular-file-upload.min.js" th:src="@{/js/plugin/angular/angular-file-upload.min.js}"></script>
+<script src="../static/js/plugin/angular/angular-file-upload.js" th:src="@{/js/plugin/angular/angular-file-upload.js}"></script>
+<script src="../static/js/plugin/angular/angular-base64-upload.min.js" th:src="@{/js/plugin/angular/angular-base64-upload.min.js}"></script>
+<script src="../static/js/plugin/bootstrap/ui-bootstrap.min.js" th:src="@{/js/plugin/bootstrap/ui-bootstrap.min.js}"></script>
+<script src="../static/js/plugin/bootstrap/ui-bootstrap-tpls.min.js" th:src="@{/js/plugin/bootstrap/ui-bootstrap-tpls.min.js}"></script>
+
+<!-- <script src="http://api.map.baidu.com/api?v=2.0&amp;ak=GRaPtLAZFqPgc6GrghXbQ3qG"></script>
+ -->
+<!-- Load custom js file -->
+
+<script src="../static/js/common/admin/common.js" th:src="@{/js/common/admin/common.js}"></script>
+<script src="../static/js/common/admin/adminApp.js" th:src="@{/js/common/admin/adminApp.js}"></script>
+<script src="../static/js/common/admin/adminDirective.js" th:src="@{/js/common/admin/adminDirective.js}"></script>
+<script src="../static/js/common/admin/style.js" th:src="@{/js/common/admin/style.js}"></script>
+<script src="../static/js/personneladd/personnelAddCtrl.js" th:src="@{/js/personneladd/personnelAddCtrl.js}"></script>
+<script src="../static/js/personneladd/personnelAddService.js" th:src="@{/js/personneladd/personnelAddService.js}"></script>
+<script src="../static/js/personnellist/personnelListCtrl.js" th:src="@{/js/personnellist/personnelListCtrl.js}"></script>
+<script src="../static/js/personnellist/personnelListService.js" th:src="@{/js/personnellist/personnelListService.js}"></script>
+<script src="../static/js/personnelupdate/personnelUpdateCtrl.js" th:src="@{/js/personnelupdate/personnelUpdateCtrl.js}"></script>
+<script src="../static/js/personnelupdate/personnelUpdateService.js" th:src="@{/js/personnelupdate/personnelUpdateService.js}"></script>
+<script src="../static/js/auditshoecompanylist/auditShoeCompanyListCtrl.js" th:src="@{/js/auditshoecompanylist/auditShoeCompanyListCtrl.js}"></script>
+<script src="../static/js/auditshoecompanylist/auditShoeCompanyListService.js" th:src="@{/js/auditshoecompanylist/auditShoeCompanyListService.js}"></script>
+<script src="../static/js/shoecompanyaudit/addShoeCompanyAuditCtrl.js" th:src="@{/js/shoecompanyaudit/addShoeCompanyAuditCtrl.js}"></script>
+<script src="../static/js/shoecompanyaudit/addShoeCompanyAuditService.js" th:src="@{/js/shoecompanyaudit/addShoeCompanyAuditService.js}"></script>
+<script src="../static/js/primaryauditfeedbacklist/primaryAuditFeedbackListCtrl.js" th:src="@{/js/primaryauditfeedbacklist/primaryAuditFeedbackListCtrl.js}"></script>
+<script src="../static/js/primaryauditfeedbacklist/primaryAuditFeedbackListService.js" th:src="@{/js/primaryauditfeedbacklist/primaryAuditFeedbackListService.js}"></script>
+<script src="../static/js/middleauditfeedbacklist/middleAuditFeedbackListCtrl.js" th:src="@{/js/middleauditfeedbacklist/middleAuditFeedbackListCtrl.js}"></script>
+<script src="../static/js/middleauditfeedbacklist/middleAuditFeedbackListService.js" th:src="@{/js/middleauditfeedbacklist/middleAuditFeedbackListService.js}"></script>
+<script src="../static/js/primaryauditfeedback/primaryAuditFeedbackCtrl.js" th:src="@{/js/primaryauditfeedback/primaryAuditFeedbackCtrl.js}"></script>
+<script src="../static/js/primaryauditfeedback/primaryAuditFeedbackService.js" th:src="@{/js/primaryauditfeedback/primaryAuditFeedbackService.js}"></script>
+<script src="../static/js/middleauditfeedback/middleAuditFeedbackCtrl.js" th:src="@{/js/middleauditfeedback/middleAuditFeedbackCtrl.js}"></script>
+<script src="../static/js/middleauditfeedback/middleAuditFeedbackService.js" th:src="@{/js/middleauditfeedback/middleAuditFeedbackService.js}"></script>
+<script src="../static/js/shoecompanylist/shoecompanyListCtrl.js" th:src="@{/js/shoecompanylist/shoecompanyListCtrl.js}"></script>
+<script src="../static/js/shoecompanylist/shoecompanyListService.js" th:src="@{/js/shoecompanylist/shoecompanyListService.js}"></script>
+<script src="../static/js/shoecompanyadd/shoecompanyAddCtrl.js" th:src="@{/js/shoecompanyadd/shoecompanyAddCtrl.js}"></script>
+<script src="../static/js/shoecompanyadd/shoecompanyAddService.js" th:src="@{/js/shoecompanyadd/shoecompanyAddService.js}"></script>
+<script src="../static/js/shoecompanyupdate/shoecompanyUpdateCtrl.js" th:src="@{/js/shoecompanyupdate/shoecompanyUpdateCtrl.js}"></script>
+<script src="../static/js/shoecompanyupdate/shoecompanyUpdateService.js" th:src="@{/js/shoecompanyupdate/shoecompanyUpdateService.js}"></script>
+<script src="../static/js/backgroundfeedbacklist/backgroundFeedBackListCtrl.js" th:src="@{/js/backgroundfeedbacklist/backgroundFeedBackListCtrl.js}"></script>
+<script src="../static/js/backgroundfeedbacklist/backgroundFeedBackListService.js" th:src="@{/js/backgroundfeedbacklist/backgroundFeedBackListService.js}"></script>
+<script src="../static/js/backgroundfeedbackadd/backgroundFeedBackAddCtrl.js" th:src="@{/js/backgroundfeedbackadd/backgroundFeedBackAddCtrl.js}"></script>
+<script src="../static/js/backgroundfeedbackadd/backgroundFeedBackAddService.js" th:src="@{/js/backgroundfeedbackadd/backgroundFeedBackAddService.js}"></script>
+<script src="../static/js/backgroundfeedbackupdate/updateFeedbackCtrl.js" th:src="@{/js/backgroundfeedbackupdate/updateFeedbackCtrl.js}"></script>
+<script src="../static/js/backgroundfeedbackupdate/updateFeedbackService.js" th:src="@{/js/backgroundfeedbackupdate/updateFeedbackService.js}"></script>
+
+</body>
+</html>

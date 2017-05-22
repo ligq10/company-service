@@ -1,0 +1,24 @@
+.letter{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.row-search{
+	padding-left: 40px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.row-margin{
+	margin-top: 10px;
+}
+
+.div-row-margin{
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.img-scale{
+	width:150px;
+	height:60px;
+}

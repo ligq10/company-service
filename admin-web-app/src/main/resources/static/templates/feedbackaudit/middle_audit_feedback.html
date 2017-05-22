@@ -1,0 +1,161 @@
+<html>
+<head>
+    <!-- Load CSS files-->
+    <link href="css/templateCss/feedbackaudit/primaryauditfeedback.css" rel="stylesheet" th:href="@{/css/templateCss/feedbackaudit/primaryauditfeedback.css}"/>  
+</head>
+	<body>
+		<div class="main">
+			<div class="list-title">
+				<span ><img class="home-img" ng-src="images/home_icon.png"/></span>
+				<span class="navigate-header">评分管理>>初审列表>>初审评分</span>
+			</div>
+			<div class="terminal-add-total">
+				<form name="auditFrom" class="form-horizontal" role="form" ng-submit="submitAudit()" novalidate>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">企业名称</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.companyName}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">评分证据</label>
+					<div id="myCarousel" ng-show="slides.length >0" class="col-md-8 carousel slide">
+					   <!-- 轮播（Carousel）指标 -->
+					   <ol class="carousel-indicators">		   
+  						  <li data-target="#myCarousel" ng-repeat="item in slides" data-slide-to="{{$index}}" ng-class="{active:$index==0}"></li>
+ 						</ol>   
+					   <!-- 轮播（Carousel）项目 -->
+					   <div class="carousel-inner">
+					      <div class="item" ng-class="{active:$index==0}"  ng-repeat="item in slides" style="text-align:center">
+					         <a ng-href="{{item}}" target="_bank"><img ng-src="{{item}}" style="margin:0px auto" alt="proof image"></img></a>
+					      </div>
+					   </div>
+					   <!-- 轮播（Carousel）导航 -->
+					   <a class="left carousel-control" href="javascript:void(0);" ng-click="prev()" role="button" data-slide="prev">
+					      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					      <span class="sr-only">Previous</span>
+					   </a>
+					   <a class="right carousel-control" href="javascript:void(0);" ng-click="next()" role="button" data-slide="next">
+					      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					      <span class="sr-only">Next</span>
+					   </a>					      
+					</div> 				    
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">评分类型</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.scoreTypeDesc}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">评分</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.score}}</p>
+				    </div>
+				  </div>				  				  
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">提交者</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.submitPerson}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">提交者电话</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.submitTel}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">提交时间</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{feedback.createTime}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">初审结果</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{primaryAudit.auditResult}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">初审意见</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{primaryAudit.auditRemark}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">初审评分项目</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{primaryAudit.scoreItem}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">初审评分类型</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{primaryAudit.scoreType}}</p>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">初审评分分数</label>
+				    <div class="col-sm-8">
+				      <p class="form-control-static">{{primaryAudit.score}}</p>
+				    </div>
+				  </div>				  				  				  				  				  
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">审核</label>
+				    <div class="col-sm-8">
+				        	<input type="radio" checked value="pass" ng-model="result" name="auditresult" class="gender">通过
+				        	&nbsp;&nbsp;&nbsp;
+				        	<input type="radio" value="refuse" ng-model="result" name="auditresult" class="gender">不通过
+				    </div>
+				  </div>
+				  <div class="form-group" ng-show="result == 'pass'">
+				    <label class="col-sm-1 control-label">评分项</label>
+				    <div class="col-sm-8">
+						<select class="form-control" required
+						    ng-model="scoreItem"
+						    ng-options="value.scoreCode as value.scoreDesc for value in scoreItemList">
+						    <option value="">请选择</option>
+						</select>
+					</div>
+				  </div>				  
+
+				  <div class="form-group" ng-show="result == 'pass'">
+				    <label class="col-sm-1 control-label">评分类型</label>
+				    <div class="col-sm-8">
+						<select class="form-control" required
+						    ng-model="scoreType"
+						    ng-options="value.scoreValue as value.scoreDesc for value in scoreTypeList">
+						    <option value="">请选择</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="form-group" ng-show="result == 'pass'">
+				    <label class="col-sm-1 control-label">评分</label>
+				    <div class="col-sm-8">
+						<div class="input-group spinner">
+						<input type="text" required name="auditscore" ng-model="auditscore" id="auditscore" class="form-control" style="display: block;"/>
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default buttom-icon spinner-padding" ng-click="plusScore()" type="button"><i class="glyphicon glyphicon-triangle-top"></i></button>
+					      <button class="btn btn-default buttom-icon spinner-padding" ng-click="reduceScore()" type="button"><i class="glyphicon glyphicon-triangle-bottom"></i></button>
+					    </div>
+					    </div>
+					</div>
+				  </div>				  
+				  <div class="form-group">
+				    <label class="col-sm-1 control-label">审核意见</label>
+				    <div class="col-sm-8">
+				            <textarea  id="" name="auditmessage" type="text" class="form-control" rows="6" maxlength="32" ng-model="message"></textarea>
+				    </div>
+				  </div>
+			      <div class="form-group content-center">
+				        	<span class="btn_group">
+				            	<button type="submit" ng-disabled="!auditFrom.$valid " class="btn btn-primary">保存</button>
+						    	<button type="button" ui-sref="middleauditfeedbacklist" class="btn btn-default">返回</button>
+							</span>
+				  </div>				  				  				  				  
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

@@ -10,35 +10,28 @@ personnelAddService.factory('personnelAddFactory',function($resource){
    personnelAddFactory=$resource(personnelAddUrl,{},{
         // 无条件查询人员列表
         queryList:{
-        	url:'/users/search/byKeyword',
+        	url:'/companyserver/users/search/byKeyword',
             method:'GET',
             headers:{
                 Accept:'application/hal+json'
             }
         },
        registerUser:{
-           url:'/users/register',
+           url:'/companyserver/users/register',
            method:'POST',
            headers:{
                'Content-Type':'application/vnd.jiahua.commands.registerUser.v1+json'
            }
        },
         create:{
-        	url:'/employees',
+        	url:'/companyserver/employees',
             method:'POST',
             headers:{
                 Accept:'application/hal+json'
             }
         },
-        update:{
-            url:'/terminalusers/:uuid',
-            method:'PATCH',
-            headers:{
-                'Content-Type':'application/json'
-            }
-        },
         delete:{
-            url:'/users/:uuid',
+            url:'/companyserver/users/:uuid',
             method:'DELETE'
         },
         resetPassword:{

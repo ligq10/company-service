@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ligq.shoe.constants.ImageType;
 import com.ligq.shoe.controller.FileController;
-import com.ligq.shoe.controller.ShoeCompanyController;
 import com.ligq.shoe.entity.Image;
 import com.ligq.shoe.repository.ImageRepository;
 import com.ligq.shoe.utils.FileUtils;
@@ -44,7 +43,7 @@ public class ImageService {
 			MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
 		ResponseEntity<Object> responseEntity = null;
 		Image image = saveFile(file);
 		if(null == image){

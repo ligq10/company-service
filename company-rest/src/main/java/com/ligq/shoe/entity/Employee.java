@@ -4,20 +4,19 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
 
-	
 	@Id
-	@Column(name="id")
+	@Column(name="id",length=64)
 	private String uuid;
+	
+	@Column(name="company_id",length=64)
+	private String companyId;
 	
 	@Column(name = "name")
 	private String name;
@@ -67,6 +66,14 @@ public class Employee {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getName() {
@@ -180,5 +187,5 @@ public class Employee {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-		
+	
 }

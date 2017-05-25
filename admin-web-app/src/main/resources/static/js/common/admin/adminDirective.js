@@ -170,7 +170,7 @@ adminApp.factory('loginSession', function() {
     		$.ajax({
     			type: "GET",
     			async: false,
-    			url: "/employees/byloginid/"+loginName,
+    			url: "/companyserver/employees/byloginid/"+loginName,
     			headers:{
     				'X-Token':$.cookie("X-Token")
     			},

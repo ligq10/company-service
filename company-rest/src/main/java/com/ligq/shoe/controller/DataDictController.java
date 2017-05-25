@@ -1,7 +1,9 @@
 package com.ligq.shoe.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,27 +12,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
+import com.ligq.shoe.constants.JhMediaType;
 import com.ligq.shoe.entity.DataDict;
 import com.ligq.shoe.entity.DataDictType;
 import com.ligq.shoe.model.DataDictAddRequest;
@@ -48,24 +43,29 @@ public class DataDictController {
 	@Autowired
 	private DataDictService dataDictService;
 	
-	@RequestMapping(value="/datadicts",method=RequestMethod.POST, produces = "application/hal+json")
-	public HttpEntity<?> saveDataDict(@RequestBody DataDictAddRequest dataDictAddRequest,
+	@RequestMapping(value="/datadicts",method=RequestMethod.POST, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	public HttpEntity<?> saveDataDict(
+			@RequestBody DataDictAddRequest dataDictAddRequest,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			BindingResult result){
 				
-		ResponseEntity<Object> responseEntity =  null;		
+		ResponseEntity<?> responseEntity =  null;		
 		try {	        
-	        responseEntity=dataDictService.save(dataDictAddRequest,request,response);			
+	        responseEntity=dataDictService.save(
+	        		dataDictAddRequest,request,response);			
 		} catch (Exception e) {			
 			logger.error(e.getMessage());
-			responseEntity=new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);			
+			return new ResponseEntity<Object>(
+					HttpStatus.INTERNAL_SERVER_ERROR);			
 		}	
 		
 		return responseEntity;
 	}
 	
-	@RequestMapping(value="/datadicts/{uuid}",method = RequestMethod.GET, produces = "application/hal+json;charset=utf-8")
+	@RequestMapping(value="/datadicts/{uuid}",method = RequestMethod.GET, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	@Transactional
 	public HttpEntity<?> findOneDataDictById(
 			 @PathVariable String uuid,
@@ -77,38 +77,49 @@ public class DataDictController {
 		}
 		DataDictResponse dataDictResponse = new DataDictResponse();
 		BeanUtils.copyProperties(dataDictEntity, dataDictResponse);
-	    Link selfLink = linkTo(methodOn(this.getClass()).findOneDataDictById(dataDictEntity.getUuid(), request, response)).withSelfRel();	    
+	    Link selfLink = linkTo(methodOn(this.getClass())
+	    		.findOneDataDictById(
+	    				dataDictEntity.getUuid(), request, response)).withSelfRel();	    
 	    dataDictResponse.add(selfLink);
-        return new ResponseEntity<Resource>(new Resource<DataDictResponse>(dataDictResponse), HttpStatus.OK);
+        return new ResponseEntity<Resource>(
+        		new Resource<DataDictResponse>(
+        				dataDictResponse), HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(value="/datadicts/bydatadictype/{typecode}",method = RequestMethod.GET, produces = "application/hal+json;charset=utf-8")
+	@RequestMapping(value="/datadicts/bydatadictype/{typecode}",
+			method = RequestMethod.GET, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	@Transactional
 	public HttpEntity<?> findDataDictByTypeCode(
 			 @PathVariable String typecode,
 			 HttpServletRequest request,
 			 HttpServletResponse response){
-		List<DataDict> dataDictList = dataDictService.findOneDataDictByTypeCode(typecode);
+		List<DataDict> dataDictList = dataDictService
+				.findOneDataDictByTypeCode(typecode);
 		if(null == dataDictList){
-            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 		}
 		
-		ResponseEntity responseEntity = null;
+		ResponseEntity<?> responseEntity = null;
 		try {
-			responseEntity = dataDictService.getResponseEntityConvertDataDictPage("",dataDictList, request, response);
+			responseEntity = dataDictService
+					.getResponseEntityConvertDataDictPage(
+							"",dataDictList, request, response);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error("User Locations Not Found:",e);
-            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);			
+            return new ResponseEntity<HttpStatus>(
+            		HttpStatus.INTERNAL_SERVER_ERROR);			
 		}
 		return  responseEntity;	
 		
 		
 	}
 	
-	@RequestMapping(value="/datadictypes",method=RequestMethod.POST, produces = "application/hal+json")
-	public HttpEntity<?> saveDataDictType(@RequestBody DataDictTypeAddRequest dataDictTypeAddRequest,
+	@RequestMapping(value="/datadictypes",method=RequestMethod.POST,
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	public HttpEntity<?> saveDataDictType(
+			@RequestBody DataDictTypeAddRequest dataDictTypeAddRequest,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			BindingResult result){
@@ -124,7 +135,8 @@ public class DataDictController {
 		return responseEntity;
 	}
 	
-	@RequestMapping(value="/datadictypes/{uuid}",method = RequestMethod.GET, produces = "application/hal+json;charset=utf-8")
+	@RequestMapping(value="/datadictypes/{uuid}",method = RequestMethod.GET,
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	@Transactional
 	public HttpEntity<?> findOneDataDictTypeById(
 			 @PathVariable String uuid,
@@ -136,9 +148,13 @@ public class DataDictController {
 		}
 		DataDictTypeResponse dataDictTypeResponse = new DataDictTypeResponse();
 		BeanUtils.copyProperties(dataDictTypeEntity, dataDictTypeResponse);
-	    Link selfLink = linkTo(methodOn(this.getClass()).findOneDataDictTypeById(dataDictTypeEntity.getUuid(), request, response)).withSelfRel();	    
+	    Link selfLink = linkTo(methodOn(this.getClass())
+	    		.findOneDataDictTypeById(
+	    				dataDictTypeEntity.getUuid(), request, response)).withSelfRel();	    
 	    dataDictTypeResponse.add(selfLink);
-        return new ResponseEntity<Resource>(new Resource<DataDictTypeResponse>(dataDictTypeResponse), HttpStatus.OK);
+        return new ResponseEntity<Resource>(
+        		new Resource<DataDictTypeResponse>(
+        				dataDictTypeResponse), HttpStatus.OK);
 		
 	}
 }

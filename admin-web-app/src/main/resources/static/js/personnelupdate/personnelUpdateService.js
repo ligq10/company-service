@@ -31,14 +31,14 @@ personnelUpdateService.factory('personnelUpdateFactory',function($resource){
             }
         },
         updateUser:{
-            url:'/employees/:uuid',
+            url:'/companyserver/employees/:uuid',
             method:'PATCH',
             headers:{
                 Accept:'application/hal+json'
             }
         },
         delete:{
-            url:'/users/:uuid',
+            url:'/companyserver/users/:uuid',
             method:'DELETE'
         },
         resetPassword:{
@@ -48,11 +48,6 @@ personnelUpdateService.factory('personnelUpdateFactory',function($resource){
                 'Content-Type':'application/vnd.jiahua.commands.UpdateUserPassword.v1+json'
             }
         },
-        getTerminalUserByImeiAndCheckcode:{
-        	url:'/terminalusers/search/findByTerminalImeiAndTerminalCheckCode',
-        	params:{imei:"imei",checkcode:"checkcode"},
-        	method:'GET'
-        },
         searchAllRoles:{
         	url: '/security/roles',
         	method: 'GET',
@@ -61,7 +56,7 @@ personnelUpdateService.factory('personnelUpdateFactory',function($resource){
         	}
         }, 
         checkLoginName:{
-            url:'/employees/checkloginname',
+            url:'/companyserver/employees/checkloginname',
             params:{loginname:"loginname"},
             method:'GET'
         }, 
@@ -74,11 +69,11 @@ personnelUpdateService.factory('personnelUpdateFactory',function($resource){
     	   method:'GET'
        },
        personnelDetail:{
-    	   url:'/employees/:uuid',
+    	   url:'/companyserver/employees/:uuid',
     	   method:'GET'
        },
        getOneUser:{
-    	   url:'/users/search',
+    	   url:'/companyserver/users/search',
            params:{loginname:'loginname'},
     	   method:'GET'
        }

@@ -9,7 +9,7 @@ shoeListService.factory('shoeListFactory',function($resource){
     var shoeListFactory;
     shoeListFactory=$resource(shoeListUrl,{},{
     	queryShoesByMultipleConditions:{	   		 
-	   		 url:"/shoecompanies",
+	   		 url:"/companyserver/shoecompanies",
 	         method:"GET",
 	         headers:{
 	                Accept:'application/hal+json'

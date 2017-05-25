@@ -9,14 +9,14 @@ backgroundFeedBackListService.factory('backgroundFeedBackListFactory',function($
     var backgroundFeedBackListFactory;
     backgroundFeedBackListFactory=$resource(backgroundFeedBackListUrl,{},{
     	queryAllFeedback:{	   		 
-	   		 url:"/feedbacks",
+	   		 url:"/companyserver/feedbacks",
 	         method:"GET",
 	         headers:{
 	                Accept:'application/hal+json'
 	         }
 	    },
 	    deleteFeedback:{
-            url:'/feedbacks/:uuid',
+            url:'/companyserver/feedbacks/:uuid',
             method:'DELETE'
         }
         // 查询树的根节点

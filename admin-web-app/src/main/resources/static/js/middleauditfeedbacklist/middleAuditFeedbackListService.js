@@ -10,7 +10,7 @@ middleAuditFeedbackListService.factory('middleAuditFeedbackListFactory',function
    middleAuditFeedbackListFactory=$resource(middleAuditFeedbackListUrl,{},{
         // 无条件查询终端列表
         queryList:{
-        	url:'/feedbacks/audit',
+        	url:'/companyserver/feedbacks/audit',
             method:'GET',
             headers:{
                 Accept:'application/hal+json'

@@ -9,7 +9,7 @@ feedBackListService.factory('feedBackListFactory',function($resource){
     var feedBackListFactory;
     feedBackListFactory=$resource(feedBackListUrl,{},{
     	queryFeedbackByShoeId:{	   		 
-	   		 url:"/shoecompanies/:uuid/feedbacks",
+	   		 url:"/companyserver/shoecompanies/:uuid/feedbacks",
 	         method:"GET",
 	         headers:{
 	                Accept:'application/hal+json'

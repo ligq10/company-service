@@ -10,20 +10,20 @@ backgroundFeedBackAddService.factory('backgroundFeedBackAddFactory',function($re
     backgroundFeedBackAddFactory=$resource(feedBackAddUrl,{},{
     	saveFeedback:{
             method:'POST',
-            url:'/shoecompanies/:uuid/feedbacks/withoutaudit',
+            url:'/companyserver/shoecompanies/:uuid/feedbacks/withoutaudit',
             headers:{
                 Accept:'application/hal+json'
             }
     	},
         getCheckCode:{
-            url:'/sendcheckcode',
+            url:'/companyserver/sendcheckcode',
             method:"POST",
             headers:{
                 Accept:'application/hal+json'
             }
         },
         searchCompanyList:{
-            url:'/shoecompanies/audit',
+            url:'/companyserver/shoecompanies/audit',
             method:"get",
             headers:{
                 Accept:'application/hal+json'

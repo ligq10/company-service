@@ -10,20 +10,20 @@ shoeDetailService.factory('shoeDetailFactory',function($resource){
     shoeDetailFactory=$resource(shoeDetailUrl,{},{
     	saveShoeCompany:{
             method:'POST',
-            url:'/shoecompanies',
+            url:'/companyserver/shoecompanies',
             headers:{
                 Accept:'application/hal+json'
             }
     	},
     	getShoeComapnyDetailById:{
-            url:'/shoecompanies/:uuid',
+            url:'/companyserver/shoecompanies/:uuid',
             method:'GET',
             headers:{
             	Accept:'application/hal+json'
             }
         },
         saveAudit:{
-        	url:'/audits',
+        	url:'/companyserver/audits',
             method:'POST',
             headers:{
                 Accept:'application/hal+json'

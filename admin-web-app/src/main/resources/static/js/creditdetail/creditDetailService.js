@@ -9,7 +9,7 @@ creditDetailService.factory('creditDetailFactory',function($resource){
     var creditDetailFactory;
     creditDetailFactory=$resource(creditDetailUrl,{},{
     	getShoeComapnyDetailById:{
-            url:'/shoecompanies/:uuid',
+            url:'/companyserver/shoecompanies/:uuid',
             method:'GET',
             headers:{
             	Accept:'application/hal+json'

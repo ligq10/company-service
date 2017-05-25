@@ -10,13 +10,13 @@ shoeAddService.factory('shoeAddFactory',function($resource){
     shoeAddFactory=$resource(shoeAddUrl,{},{
     	saveShoeCompany:{
             method:'POST',
-            url:'/shoecompanies',
+            url:'/companyserver/shoecompanies',
             headers:{
                 Accept:'application/hal+json'
             }
     	},
         getCheckCode:{
-            url:'/sendcheckcode',
+            url:'/companyserver/sendcheckcode',
             method:"POST",
             headers:{
                 Accept:'application/hal+json'

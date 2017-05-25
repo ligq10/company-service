@@ -10,35 +10,35 @@ middleAuditFeedbackService.factory('middleAuditFeedbackFactory',function($resour
    middleAuditFeedbackFactory=$resource(middleAuditFeedbackUrl,{},{
         // 无条件查询终端列表
         queryList:{
-        	url:'/feedbacks/audit',
+        	url:'/companyserver/feedbacks/audit',
             method:'GET',
             headers:{
                 Accept:'application/hal+json'
             }
         },
         getFeedbackDetailById:{
-            url:'/feedbacks/:uuid',
+            url:'/companyserver/feedbacks/:uuid',
             method:'GET',
             headers:{
             	Accept:'application/hal+json'
             }
        },
        getAuditMessagesByFeedbackId:{
-           url:'/buisness/:uuid/audits',
+           url:'/companyserver/buisness/:uuid/audits',
            method:'GET',
            headers:{
            	Accept:'application/hal+json'
            }
       },
        saveAudit:{
-        	url:'/audits',
+        	url:'/companyserver/audits',
             method:'POST',
             headers:{
                 Accept:'application/hal+json'
             }
         },
         update:{
-            url:'/terminalusers/:uuid',
+            url:'/companyserver/terminalusers/:uuid',
             method:'PATCH',
             headers:{
                 'Content-Type':'application/json'

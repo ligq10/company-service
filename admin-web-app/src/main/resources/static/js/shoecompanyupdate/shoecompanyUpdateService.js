@@ -9,21 +9,21 @@ shoecompanyUpdateService.factory('shoecompanyUpdateFactory',function($resource){
     var shoecompanyUpdateFactory;
     shoecompanyUpdateFactory=$resource(shoecompanyUpdateUrl,{},{
         updateShoeCompanyById:{
-            url:'/shoecompanies/:uuid',
+            url:'/companyserver/shoecompanies/:uuid',
             method:'PATCH',
             headers:{
                 Accept:'application/hal+json'
             }
         },
     	getShoeComapnyDetailById:{
-            url:'/shoecompanies/:uuid',
+            url:'/companyserver/shoecompanies/:uuid',
             method:'GET',
             headers:{
             	Accept:'application/hal+json'
             }
         },
         getCheckCode:{
-            url:'/sendcheckcode',
+            url:'/companyserver/sendcheckcode',
             method:"POST",
             headers:{
                 Accept:'application/hal+json'

@@ -16,7 +16,6 @@ public class Pinyin4jUtil {
      * 获取中文汉字拼音 默认输出 
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:54:01 AM 
      * @param chinese 
      * @return 
@@ -30,7 +29,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:58:45 AM 
      * @param chinese 
      * @return 
@@ -44,7 +42,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:58:45 AM 
      * @param chinese 
      * @return 
@@ -58,7 +55,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 10:00:54 AM 
      * @param chinese 
      * @return 
@@ -72,7 +68,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 10:00:54 AM 
      * @param chinese 
      * @return 
@@ -89,13 +84,28 @@ public class Pinyin4jUtil {
         String firstStr = str.toString();
     	return firstStr.substring(0, firstStr.length()-1);  
     } 
+ 
+    /*************************************************************************** 
+     * 拼音输出 
+     *  
+     * @Name: Pinyin4jUtil.java 
+     * @Description: TODO 
+     * @version: Jan 13, 2012 10:00:54 AM 
+     * @param chinese 
+     * @return 
+     */  
+    public static String getPinyinAndUpperCase(String chinese) {
+    	StringBuilder str = new StringBuilder();
+        String pingyin = getPinyin(chinese);
+        String[] pingyinArr = pingyin.split(",");
+    	return pingyinArr[0];  
+    } 
     
     /*************************************************************************** 
      * 拼音简拼输出 
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 11:08:15 AM 
      * @param chinese 
      * @return 
@@ -109,7 +119,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:34:11 AM 
      * @param chinese 
      *            中文汉字 
@@ -155,7 +164,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:35:51 AM 
      * @return 
      */  
@@ -171,7 +179,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:39:54 AM 
      * @param strJaggedArray 
      * @return 
@@ -185,7 +192,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:39:47 AM 
      * @param strJaggedArray 
      * @return 
@@ -221,7 +227,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:36:18 AM 
      * @param s 
      * @return 
@@ -241,7 +246,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:37:57 AM 
      * @param stringSet 
      * @return 
@@ -265,7 +269,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 11:05:58 AM 
      * @param chinese 
      * @return 
@@ -290,7 +293,6 @@ public class Pinyin4jUtil {
      *  
      * @Name: Pinyin4jUtil.java 
      * @Description: TODO 
-     * @author: wang_chian@foxmail.com 
      * @version: Jan 13, 2012 9:49:27 AM 
      * @param args 
      */  

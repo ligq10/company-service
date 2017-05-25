@@ -10,14 +10,14 @@ shoecompanyListService.factory('shoecompanyListFactory',function($resource){
    shoecompanyListFactory=$resource(shoecompanyUrl,{},{
         // 无条件查询终端列表
         queryList:{
-        	url:'/shoecompanies/withoutaudit',
+        	url:'/companyserver/shoecompanies/withoutaudit',
             method:'GET',
             headers:{
                 Accept:'application/hal+json'
             }
         },
         deleteShoeCompany:{
-            url:'/shoecompanies/:uuid',
+            url:'/companyserver/shoecompanies/:uuid',
             method:'DELETE'
         },
        checkLoginName:{

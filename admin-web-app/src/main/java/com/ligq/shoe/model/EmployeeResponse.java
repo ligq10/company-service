@@ -4,11 +4,17 @@ import java.util.Date;
 
 
 
+
+import java.util.List;
+
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.util.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ligq.shoe.utils.DateUtils;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class EmployeeResponse{
+public class EmployeeResponse extends ResourceSupport{
 
 	private String uuid;
 	
@@ -33,7 +39,9 @@ public class EmployeeResponse{
 	private String createTime;
 	
 	private String accessToken;
-	
+
+	private List<RoleResponse> roles;
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -130,4 +138,12 @@ public class EmployeeResponse{
 		this.accessToken = accessToken;
 	}
 
+	public List<RoleResponse> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleResponse> roles) {
+		this.roles = roles;
+	}
+	
 }

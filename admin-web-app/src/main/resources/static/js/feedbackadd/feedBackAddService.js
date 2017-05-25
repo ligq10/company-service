@@ -10,13 +10,13 @@ feedBackAddService.factory('feedBackAddFactory',function($resource){
     feedBackAddFactory=$resource(feedBackAddUrl,{},{
     	saveFeedback:{
             method:'POST',
-            url:'/shoecompanies/:uuid/feedbacks',
+            url:'/companyserver/shoecompanies/:uuid/feedbacks',
             headers:{
                 Accept:'application/hal+json'
             }
     	},
         getCheckCode:{
-            url:'/sendcheckcode',
+            url:'/companyserver/sendcheckcode',
             method:"POST",
             headers:{
                 Accept:'application/hal+json'

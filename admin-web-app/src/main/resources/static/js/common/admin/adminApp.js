@@ -4,7 +4,7 @@
 'use strict';
 var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers','primaryAuditFeedbackListControllers','shoecompanyListControllers','shoecompanyAddControllers','shoecompanyUpdateControllers',
                   'primaryAuditFeedbackControllers','middleAuditFeedbackControllers','middleAuditFeedbackListControllers','personnelListControllers','personnelUpdateControllers','auditShoeCompanyListControllers','addShoeCompanyAuditControllers',
-                  'backgroundFeedBackListControllers','backgroundFeedBackAddControllers','updateFeedbackControllers']);
+                  'backgroundFeedBackListControllers','backgroundFeedBackAddControllers','updateFeedbackControllers','companyUpdateControllers']);
 adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$rootScopeProvider){
     $httpProvider.defaults.headers.common['X-Token'] = $.cookie('X-Token');
 
@@ -119,6 +119,13 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             controller:'backgroundFeedBackAddCtrl',
             permission:'FEEDBACK_ADD',
             father:'FEEDBACK_AUDIT_MANAGER'             
+        })
+        .state('companyupdate',{
+            url:"/companyupdate",
+            templateUrl:'templates/company/company-update.html',
+            controller:'companyUpdateCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
         })
         .state('feedbackdetail',{
             url:"/feedbackdetail/:uuid",

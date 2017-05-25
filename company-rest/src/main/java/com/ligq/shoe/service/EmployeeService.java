@@ -38,22 +38,17 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.ligq.shoe.controller.EmployeeContorller;
+import com.ligq.shoe.controller.EmployeeController;
 import com.ligq.shoe.entity.Employee;
-import com.ligq.shoe.model.EmployeeAddRequest;
-import com.ligq.shoe.model.EmployeeResponse;
 import com.ligq.shoe.model.RegisterUser;
 import com.ligq.shoe.model.ResetPasswordRequest;
 import com.ligq.shoe.model.RoleResponse;
-import com.ligq.shoe.model.UpdatePasswordRequest;
 import com.ligq.shoe.model.UpdateUserRoleRequest;
-import com.ligq.shoe.model.UserResponse;
 import com.ligq.shoe.repository.EmployeeRepository;
+import com.ligq.shoe.request.EmployeeAddRequest;
+import com.ligq.shoe.response.EmployeeResponse;
 import com.ligq.shoe.utils.BeanUtils;
 
 @Service
@@ -73,7 +68,9 @@ public class EmployeeService {
 		return employeeEntity;
 	}
 
-	public ResponseEntity<Object> save(EmployeeAddRequest employeeAddRequest,
+	public ResponseEntity<Object> save(
+			String companyUuid,
+			EmployeeAddRequest employeeAddRequest,
 			HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getHeader(SECURITY_TOKEN_HEADER);
 		RegisterUser registerUser = new RegisterUser();
@@ -94,13 +91,15 @@ public class EmployeeService {
 		BeanUtils.copyProperties(employeeAddRequest, employeeEntity);
 		Date createTime = new Date();
 		String uuid = getUuidByloginName(employeeAddRequest.getLoginName());
+		employeeEntity.setCompanyId(companyUuid);
 		employeeEntity.setUuid(uuid);
 		employeeEntity.setCreateTime(createTime);
 		employeeEntity.setUpdateTime(createTime);
 		employeeRepository.save(employeeEntity);
 		
 		HttpHeaders headers = new HttpHeaders();
-		URI selfUrl = linkTo(methodOn(EmployeeContorller.class).findOneEmployeeById(employeeEntity.getUuid(), request, response)).toUri();
+		URI selfUrl = linkTo(methodOn(EmployeeController.class)
+				.findOneEmployeeById(employeeEntity.getUuid(), request, response)).toUri();
 		headers.setLocation(selfUrl);
 		return new ResponseEntity<Object>(headers,HttpStatus.CREATED);
 
@@ -112,7 +111,7 @@ public class EmployeeService {
 		return employeePage;
 	}
 	
-	public ResponseEntity getResponseEntityConvertEmployeePage(String pathParams,Page<Employee> employeeResult,
+	public ResponseEntity<?> getResponseEntityConvertEmployeePage(String pathParams,Page<Employee> employeeResult,
 			Pageable pageable,HttpServletRequest request,HttpServletResponse response)throws Exception{
 		String token = request.getHeader(SECURITY_TOKEN_HEADER);
 
@@ -125,7 +124,8 @@ public class EmployeeService {
 
 				EmployeeResponse employeeResponse = new EmployeeResponse();
 				BeanUtils.copyProperties(employee, employeeResponse);
-			    Link selfLink = linkTo(methodOn(EmployeeContorller.class).findOneEmployeeById(employee.getUuid(), request, response)).withSelfRel();	    
+			    Link selfLink = linkTo(methodOn(EmployeeController.class)
+			    		.findOneEmployeeById(employee.getUuid(), request, response)).withSelfRel();	    
 			    employeeResponse.add(selfLink);
 				List<RoleResponse> roles = this.findRolesByUserUuid(employee.getUuid(),token);
 				if(null != roles){
@@ -214,9 +214,11 @@ public class EmployeeService {
 		
 		String rolesAddress = env.getRequiredProperty("oauth2User.endpoint")+"/"+uuid;
 		try {
-			ResponseEntity responseEntity = restTemplate.exchange(rolesAddress, HttpMethod.GET, new HttpEntity<MultiValueMap>(headers), Object.class);
+			ResponseEntity<?> responseEntity = restTemplate.exchange(
+					rolesAddress, HttpMethod.GET, new HttpEntity<MultiValueMap>(headers), Object.class);
 
-			if(null != responseEntity || responseEntity.getStatusCode().equals(HttpStatus.OK)){
+			if(null != responseEntity 
+					&& responseEntity.getStatusCode().equals(HttpStatus.OK)){
 				Map rolesMap = (Map)responseEntity.getBody();
 				JSONObject jsonObjct = JSONObject.fromObject(responseEntity.getBody());
 				
@@ -242,7 +244,8 @@ public class EmployeeService {
             return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
 		
-		if(StringUtils.isEmpty(employeeAddRequest.getPassword()) == false && employeeAddRequest.getPassword().equalsIgnoreCase(employeeEntity.getPassword()) == false){
+		if(StringUtils.isEmpty(employeeAddRequest.getPassword()) == false
+				&& employeeAddRequest.getPassword().equalsIgnoreCase(employeeEntity.getPassword()) == false){
 			ResetPasswordRequest resetPassword = new ResetPasswordRequest();
 			resetPassword.setLoginName(employeeAddRequest.getLoginName());
 			resetPassword.setPassword(employeeAddRequest.getPassword());
@@ -275,7 +278,7 @@ public class EmployeeService {
 			}
 		}
 		
-		BeanUtils.copyPropertiesIgnoreNull(employeeAddRequest, employeeEntity);
+		BeanUtils.copyPropertiesIgnoreNullValue(employeeAddRequest, employeeEntity);
 		employeeRepository.save(employeeEntity);
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
@@ -350,14 +353,15 @@ public class EmployeeService {
 		
 		String userAddress = env.getRequiredProperty("oauth2User.endpoint")+"/"+uuid;
 		try {
-			ResponseEntity responseEntity = restTemplate.exchange(userAddress, HttpMethod.DELETE, new HttpEntity<MultiValueMap>(headers), Object.class);
+			ResponseEntity<?> responseEntity = restTemplate.exchange(
+					userAddress, HttpMethod.DELETE, new HttpEntity<MultiValueMap>(headers), Object.class);
 
-			if(null != responseEntity || responseEntity.getStatusCode().equals(HttpStatus.OK)){
+			if(null != responseEntity 
+					&& responseEntity.getStatusCode().equals(HttpStatus.OK)){
 				return true;
 			}
 
-		} catch (RestClientException | IllegalStateException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			return false;
 		}

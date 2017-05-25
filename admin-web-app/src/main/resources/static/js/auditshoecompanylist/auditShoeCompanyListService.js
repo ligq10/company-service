@@ -10,7 +10,7 @@ auditShoeCompanyListServices.factory('auditShoeCompanyListFactory',function($res
    auditShoeCompanyListFactory=$resource(auditShoeCompanyListUrl,{},{
         // 无条件查询审核列表
 	   queryAuditList:{
-        	url:'/shoecompanies/audit',
+        	url:'/companyserver/shoecompanies/audit',
             method:'GET',
             headers:{
                 Accept:'application/hal+json'

@@ -44,7 +44,8 @@ public class CatalogController {
 			responseEntity = cataLogService.findCatalogs(pageable, request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -83,7 +84,8 @@ public class CatalogController {
 
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -101,7 +103,8 @@ public class CatalogController {
 					.updateCataLog(uuid, cataLogUpdateRequest,request);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -117,7 +120,8 @@ public class CatalogController {
 			responseEntity = cataLogService.deleteCataLogById(uuid,request);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -134,7 +138,8 @@ public class CatalogController {
 			responseEntity = cataLogService.findCataLogByCode(code,request);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}

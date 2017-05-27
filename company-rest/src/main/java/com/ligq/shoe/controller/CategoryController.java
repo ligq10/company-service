@@ -44,10 +44,13 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "/catalogs/{cataloguuid}/categories", method = RequestMethod.GET, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	@RequestMapping(value = "/catalogs/{cataloguuid}/categories", 
+			method = RequestMethod.GET, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> findCategoriesByCatalogUuid(
 			@PathVariable String cataloguuid, 
-			@PageableDefault(page = 0, size = 20,sort = { "sort" }, direction = Direction.ASC) Pageable pageable,
+			@PageableDefault(page = 0, size = 20,sort = { "sort" },
+				direction = Direction.ASC) Pageable pageable,
 			HttpServletRequest request) {
 		
 		ResponseEntity<?> responseEntity =  null;		
@@ -60,7 +63,9 @@ public class CategoryController {
 		return responseEntity;
 	}
 	
-	@RequestMapping(value = "/catalogs/{cataloguuid}/categories", method = RequestMethod.POST, consumes=JhMediaType.APPLICATION_DEFAULT_JSON_VALUE, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	@RequestMapping(value = "/catalogs/{cataloguuid}/categories",
+			method = RequestMethod.POST,
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> addCategory(
 			@PathVariable String cataloguuid,
 			@RequestBody AddCategoryRequest categoryRequest,
@@ -75,7 +80,8 @@ public class CategoryController {
 		}
 		
 		try{
-			responseEntity = categoryService.saveCategoryFromCatalog(cataloguuid,categoryRequest,request);
+			responseEntity = categoryService
+					.saveCategoryFromCatalog(cataloguuid,categoryRequest,request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
@@ -84,8 +90,9 @@ public class CategoryController {
 		return responseEntity;
 	}
 	
-	@RequestMapping(value = "/catalogs/x/categories/{parentId}/children", method = RequestMethod.POST,
-			consumes=JhMediaType.APPLICATION_DEFAULT_JSON_VALUE, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	@RequestMapping(value = "/catalogs/x/categories/{parentId}/children",
+			method = RequestMethod.POST,
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> addCategoryAndChild( 
 			@PathVariable String parentId,
 			@RequestBody AddCategoryRequest categoryRequest,
@@ -100,10 +107,13 @@ public class CategoryController {
 		}
 		
 		try{
-			responseEntity = categoryService.saveCategoryFromParentCategory(parentId,categoryRequest,request);
+			responseEntity = categoryService
+					.saveCategoryFromParentCategory(
+							parentId,categoryRequest,request);
 		}catch(Exception e){
 			logger.error(e.getMessage());
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return responseEntity;
@@ -111,7 +121,8 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/catalogs/x/categories/{uuid}", 
-			method = RequestMethod.GET, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+			method = RequestMethod.GET, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> getCategoryByUuid(
 			@PathVariable String uuid, 
 			HttpServletRequest request) {
@@ -121,14 +132,16 @@ public class CategoryController {
 			responseEntity = categoryService.findCategoryByUuid(uuid,request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 		
 	}
 
 	@RequestMapping(value = "/catalogs/x/categories/{uuid}/children",
-			method = RequestMethod.GET, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+			method = RequestMethod.GET, 
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> getCategoryChildrenByUuid(
 			@PathVariable String uuid, 
 			@PageableDefault(page = 0, size = 20,sort = { "sort" },
@@ -137,17 +150,19 @@ public class CategoryController {
 		
 		ResponseEntity<?> responseEntity =  null;		
 		try{
-			responseEntity = categoryService.findCategoriesByParentId(uuid,pageable,request);
+			responseEntity = categoryService
+					.findCategoriesByParentId(uuid,pageable,request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 		
 	}
 	
 	@RequestMapping(value = "/catalogs/x/categories/{uuid}",method = RequestMethod.POST,
-			consumes=JhMediaType.APPLICATION_DEFAULT_JSON_VALUE, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> updateCategoryAndChildren(
 			@PathVariable String uuid,
 			@RequestBody CategoryUpdateRequest categoryUpdateRequest,
@@ -162,10 +177,12 @@ public class CategoryController {
 		
 		ResponseEntity<?> responseEntity =  null;		
 		try{
-			responseEntity = categoryService.updateCategory(uuid,categoryUpdateRequest,request);
+			responseEntity = categoryService
+					.updateCategory(uuid,categoryUpdateRequest,request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 		
@@ -173,7 +190,8 @@ public class CategoryController {
 
 	@Transactional
 	@RequestMapping(value = "/catalogs/x/categories/{uuid}",
-		method = RequestMethod.DELETE, produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+		method = RequestMethod.DELETE, 
+		produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> delCategory(
 			@PathVariable String uuid,
 			HttpServletRequest request) {
@@ -183,7 +201,8 @@ public class CategoryController {
 			responseEntity = categoryService.deleteCategory(uuid,request);
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 		

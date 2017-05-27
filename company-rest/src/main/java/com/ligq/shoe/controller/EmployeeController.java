@@ -153,6 +153,8 @@ public class EmployeeController {
 			 @PathVariable String loginid,
 			 HttpServletRequest request,
 			 HttpServletResponse response){
+		String host = request.getHeader("Host");
+		logger.info("request.getHeader('Host'):"+host);
 		String token = request.getHeader(SECURITY_TOKEN_HEADER);
 		Employee employeeEntity = employeeService.findByLoginName(loginid);
 		if(null == employeeEntity){

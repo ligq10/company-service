@@ -2,9 +2,9 @@
  * Created by Administrator on 15-1-28.
  */
 'use strict';
-var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers','primaryAuditFeedbackListControllers','shoecompanyListControllers','shoecompanyAddControllers','shoecompanyUpdateControllers',
-                  'primaryAuditFeedbackControllers','middleAuditFeedbackControllers','middleAuditFeedbackListControllers','personnelListControllers','personnelUpdateControllers','auditShoeCompanyListControllers','addShoeCompanyAuditControllers',
-                  'backgroundFeedBackListControllers','backgroundFeedBackAddControllers','updateFeedbackControllers','companyUpdateControllers']);
+var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers',
+                  'personnelListControllers','personnelUpdateControllers','companyUpdateControllers','categoryListControllers','categoryAddControllers',
+                  'categoryUpdateControllers']);
 adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$rootScopeProvider){
     $httpProvider.defaults.headers.common['X-Token'] = $.cookie('X-Token');
 
@@ -43,7 +43,7 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             permission:'PERSONNEL_UPDATE',
             father:'PERSONNEL_MANAGER'
         })
-        .state('auditshoecompanylist',{
+/*        .state('auditshoecompanylist',{
             url:"/auditshoecompanylist",
             templateUrl:'templates/shoecompanymanager/audit_shoe_company_list.html',
             controller:'auditShoeCompanyListCtrl',
@@ -120,6 +120,13 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             permission:'FEEDBACK_ADD',
             father:'FEEDBACK_AUDIT_MANAGER'             
         })
+        .state('feedbackdetail',{
+            url:"/feedbackdetail/:uuid",
+            templateUrl:'templates/feedback/feedback-update.html',
+            controller:'updateFeedbackCtrl',
+            permission:'FEEDBACK_UPDATE',
+            father:'FEEDBACK_AUDIT_MANAGER'             
+        })*/
         .state('companyupdate',{
             url:"/companyupdate",
             templateUrl:'templates/company/company-update.html',
@@ -127,11 +134,25 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             permission:'PERSONNEL_UPDATE',
             father:'PERSONNEL_MANAGER'
         })
-        .state('feedbackdetail',{
-            url:"/feedbackdetail/:uuid",
-            templateUrl:'templates/feedback/feedback-update.html',
-            controller:'updateFeedbackCtrl',
-            permission:'FEEDBACK_UPDATE',
-            father:'FEEDBACK_AUDIT_MANAGER'             
+        .state('categorylist',{
+            url:"/categorylist",
+            templateUrl:'templates/category/category-list.html',
+            controller:'categoryListCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('categoryadd',{
+            url:"/categoryadd",
+            templateUrl:'templates/category/category-add.html',
+            controller:'categoryAddCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('categoryupdate',{
+            url:"/categoryupdate/:uuid",
+            templateUrl:'templates/category/category-update.html',
+            controller:'categoryUpdateCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
         });
 });

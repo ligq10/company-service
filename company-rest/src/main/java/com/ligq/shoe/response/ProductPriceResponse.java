@@ -13,6 +13,8 @@ public class ProductPriceResponse extends ResourceSupport{
 	private String productId;
 
 	private String productName;
+	
+	private CategoryDetailResponse cateory;
 
 	private Double price;
 
@@ -96,6 +98,14 @@ public class ProductPriceResponse extends ResourceSupport{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public CategoryDetailResponse getCateory() {
+		return cateory;
+	}
+
+	public void setCateory(CategoryDetailResponse cateory) {
+		this.cateory = cateory;
 	}
 
 }

@@ -14,6 +14,8 @@ public class AddProductPriceRequest {
 
 	private String companyId;
 	
+	private String categoryId;
+	
 	private String unit;
 	
 	private String description;
@@ -37,6 +39,14 @@ public class AddProductPriceRequest {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getProductName() {

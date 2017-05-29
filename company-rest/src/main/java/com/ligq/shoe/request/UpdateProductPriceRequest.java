@@ -8,6 +8,8 @@ public class UpdateProductPriceRequest {
 	
 	private String productName;
 
+	private String categoryId;
+	
 	private Double price;
 	
 	private String unit;
@@ -24,6 +26,14 @@ public class UpdateProductPriceRequest {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getProductName() {

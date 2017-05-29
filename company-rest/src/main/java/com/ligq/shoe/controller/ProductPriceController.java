@@ -61,14 +61,15 @@ public class ProductPriceController {
 					.saveProductPrice(uuid, addProductPriceRequest,request);
 		} catch (Exception e) {			
 			logger.error(e.getMessage(),e);						
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);				
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
 		}		
 	   
         return responseEntity;
     	   
     }
 	
-	@RequestMapping(value="/companies/{uuid}/productprices",method=RequestMethod.GET,
+/*	@RequestMapping(value="/companies/{uuid}/productprices",method=RequestMethod.GET,
 			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
 	public HttpEntity<?> findProductPricesbycondition(
 			@PathVariable String uuid,
@@ -88,6 +89,28 @@ public class ProductPriceController {
 		}		
 	   
         return responseEntity;
+	}*/
+ 
+	@RequestMapping(value="/companies/{uuid}/productprices",method=RequestMethod.GET,
+			produces = JhMediaType.APPLICATION_DEFAULT_JSON_VALUE)
+	public HttpEntity<?> findProductPricesbycondition(
+			@PathVariable String uuid,
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+			@PageableDefault(page = 0, size = 20) Pageable pageable,
+			HttpServletRequest request){
+		
+		ResponseEntity<?> responseEntity =  null;		
+		try {	
+   		    responseEntity = productPriceService
+   		    		.findProductPricesbycondition(
+   		    				uuid,keyword,pageable,request);
+		} catch (Exception e) {			
+			logger.error(e.getMessage(),e);						
+			responseEntity= new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
+		}		
+	   
+        return responseEntity;
 	}
     
     @RequestMapping(value = "/productprices",method = RequestMethod.GET,
@@ -101,7 +124,8 @@ public class ProductPriceController {
     		 responseEntity = productPriceService.findAll(pageable,request);
     	}catch(Exception e){
     		logger.error(e.getMessage(),e);						
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);				
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
     	}
     	return responseEntity;		
     }
@@ -118,7 +142,8 @@ public class ProductPriceController {
    		 responseEntity = productPriceService.findProductPriceByUuid(uuid,request);
 	   	}catch(Exception e){
 	   		logger.error(e.getMessage(),e);						
-	   		return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);				
+	   		return new ResponseEntity<HttpStatus>(
+	   				HttpStatus.INTERNAL_SERVER_ERROR);				
 	   	}
 	   	return responseEntity;		   	
     }
@@ -137,7 +162,8 @@ public class ProductPriceController {
 							uuid, updateProductPriceRequest,request);
 		} catch (Exception e) {			
 			logger.error(e.getMessage(),e);						
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);				
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
 		}		
 	   
         return responseEntity;
@@ -157,7 +183,8 @@ public class ProductPriceController {
 					.deleteProductPriceByUuid(uuid,request);
 		} catch (Exception e) {			
 			logger.error(e.getMessage(),e);						
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);				
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
 		}		
 	   
         return responseEntity;	       
@@ -177,7 +204,8 @@ public class ProductPriceController {
 					.batchDeleteProductPriceByIds(productPriceIds,request);
 		} catch (Exception e) {			
 			logger.error(e.getMessage(),e);						
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);				
+			return new ResponseEntity<HttpStatus>(
+					HttpStatus.INTERNAL_SERVER_ERROR);				
 		}		
 	   
         return responseEntity;	 	

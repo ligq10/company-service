@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
@@ -28,12 +29,14 @@ import org.springframework.util.StringUtils;
 import com.ligq.shoe.constants.DeleteStatus;
 import com.ligq.shoe.constants.ProductPriceStatus;
 import com.ligq.shoe.controller.ProductPriceController;
+import com.ligq.shoe.entity.Category;
 import com.ligq.shoe.entity.ProductPrice;
 import com.ligq.shoe.mysql.dynamic.Criteria;
 import com.ligq.shoe.mysql.dynamic.Restrictions;
 import com.ligq.shoe.repository.ProductPriceRepository;
 import com.ligq.shoe.request.AddProductPriceRequest;
 import com.ligq.shoe.request.UpdateProductPriceRequest;
+import com.ligq.shoe.response.CategoryDetailResponse;
 import com.ligq.shoe.response.ProductPriceDetailResponse;
 import com.ligq.shoe.response.ProductPriceResponse;
 import com.ligq.shoe.utils.BeanUtils;
@@ -49,15 +52,24 @@ public class ProductPriceService {
 
 	@Autowired
 	private ProductPriceRepository productPriceRepository;
-
+	@Autowired
+	private CategoryService categoryService;
 	
 	public ResponseEntity<?> saveProductPrice(
 			String uuid,
 			AddProductPriceRequest addProductPriceRequest,
 			HttpServletRequest request) throws Exception{
 		
+		Category  categoryEntiry = categoryService.findCategoryByUuid(
+				addProductPriceRequest.getCategoryId());
+		if(null == categoryEntiry){
+			return new ResponseEntity<Object>(
+					"category not found!",HttpStatus.BAD_REQUEST);
+		}
+
         ProductPrice productPriceEntity = new ProductPrice();
-        BeanUtils.copyPropertiesIgnoreNullValue(addProductPriceRequest, productPriceEntity);
+        BeanUtils.copyPropertiesIgnoreNullValue(
+        		addProductPriceRequest, productPriceEntity);
         Date currentTime = new Date(System.currentTimeMillis());
         productPriceEntity.setUuid(UUID.randomUUID().toString());
 		productPriceEntity.setCompanyId(uuid);
@@ -134,6 +146,15 @@ public class ProductPriceService {
 			String uuid, 
 			UpdateProductPriceRequest updateProductPriceRequest, 
 			HttpServletRequest request) throws Exception{
+		
+		if(!StringUtils.isEmpty(updateProductPriceRequest.getCategoryId())){
+			Category  categoryEntiry = categoryService.findCategoryByUuid(
+					updateProductPriceRequest.getCategoryId());
+			if(null == categoryEntiry){
+				return new ResponseEntity<Object>(
+						"category not found!",HttpStatus.BAD_REQUEST);
+			}
+		}
 		
 		ProductPrice productPrice = productPriceRepository.findOne(uuid);
 		if(null == productPrice){
@@ -244,6 +265,44 @@ public class ProductPriceService {
 		Page<ProductPrice> productPricePage = productPriceRepository
 				.findAll(criteria, pageable);
 		return productPricePage;
+	}
+
+
+
+	public ResponseEntity<?> findProductPricesbycondition(String uuid,
+			String keyword, Pageable pageable, HttpServletRequest request) {
+		StringBuffer pathParams = new StringBuffer();
+		pathParams.append(StringUtils.isEmpty(keyword)?"&keyword=":"&keyword="+keyword);
+		Page<ProductPrice> productPricePage = productPriceRepository.findProductPricesByKeyword(
+				uuid, keyword, pageable);
+	    if(null == productPricePage || productPricePage.getContent().isEmpty()){
+		   return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+	    }
+	    List<Link> list = LinkUtils.prepareLinks(pageable.getPageNumber(),
+				pageable.getPageSize(), request, productPricePage,pathParams.toString());
+	    List<ProductPriceResponse> result = new ArrayList<ProductPriceResponse>();
+        for (ProductPrice productPrice : productPricePage.getContent()) {
+    	    ProductPriceResponse productPriceResponse = new ProductPriceResponse();
+            BeanUtils.copyProperties(productPrice, productPriceResponse);
+            productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
+            		.findProductPriceByUuid(productPrice.getUuid(),request)).withSelfRel());
+            Category category = categoryService.findCategoryByUuid(productPrice.getCategoryId());
+            if(null != category){
+        		CategoryDetailResponse categoryResponse = new CategoryDetailResponse();
+        		BeanUtils.copyProperties(category, categoryResponse);
+        		categoryResponse.setCreatedTime(
+        				DateUtils.composeUTCTime(category.getCreatedTime()));
+        		productPriceResponse.setCateory(categoryResponse);
+            }
+            result.add(productPriceResponse);
+         }
+       // Page<ProductPriceResponse> content = new PageImpl(result,pageable,productPricePage.getTotalElements());
+		 PagedResources<ProductPriceResponse> pagedResources = new PagedResources<ProductPriceResponse>(
+				result, new PageMetadata(productPricePage.getSize(), productPricePage.getNumber(),
+						productPricePage.getTotalElements(), productPricePage.getTotalPages()),
+				list);
+		 return new ResponseEntity<PagedResources<ProductPriceResponse>>(
+				 pagedResources, HttpStatus.OK); 	 
 	}
 	
 }

@@ -22,6 +22,10 @@ public class ProductPrice {
 	@Column(name = "product_name",length=256)
 	private String productName;
 
+	//分类ID
+	@Column(name="category_id",length=64)
+	private String categoryId;
+	
 	@Column(name = "price",precision=2)
 	private Double price;
 	
@@ -62,6 +66,12 @@ public class ProductPrice {
 		this.uuid = uuid;
 	}
 
+	public String getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
 	public String getProductName() {
 		return productName;
 	}

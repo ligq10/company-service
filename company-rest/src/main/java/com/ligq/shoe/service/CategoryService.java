@@ -180,6 +180,13 @@ public class CategoryService {
 				categoryResponse, HttpStatus.OK);
 	}
 	
+	public Category findCategoryByUuid(String uuid) {
+		
+		return categoryRepository.findOne(uuid);
+
+	}
+	
+	
 	private List<Link> categoryAddLink(Category category, HttpServletRequest request)throws Exception {
 		List<Link> links = new ArrayList<Link>();
 		

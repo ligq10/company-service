@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,12 +154,15 @@ public class EmployeeController {
 			 @PathVariable String loginid,
 			 HttpServletRequest request,
 			 HttpServletResponse response){
-		String host = request.getHeader("Host");
-		logger.info("request.getHeader('Host'):"+host);
+
 		String token = request.getHeader(SECURITY_TOKEN_HEADER);
+	    if(StringUtils.isEmpty(token)){
+            return new ResponseEntity<HttpStatus>(
+            		HttpStatus.UNAUTHORIZED);
+	    }
 		Employee employeeEntity = employeeService.findByLoginName(loginid);
 		if(null == employeeEntity){
-            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 		}
 		
 		EmployeeResponse employeeResponse = new EmployeeResponse();
@@ -167,7 +171,7 @@ public class EmployeeController {
 	    Link selfLink = linkTo(methodOn(this.getClass())
 	    		.findOneEmployeeById(employeeEntity.getUuid(), request, response)).withSelfRel();	    
 	    employeeResponse.add(selfLink);
-	    
+
 		List<RoleResponse> roles = employeeService
 				.findRolesByUserUuid(employeeEntity.getUuid(),token);
 		if(null != roles){

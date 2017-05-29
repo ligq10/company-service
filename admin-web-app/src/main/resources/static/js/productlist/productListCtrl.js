@@ -14,7 +14,7 @@ productListControllers.controller('productListCtrl',['$scope','loginSession','pr
        $scope.pageSize=PAGESIZE_DEFAULT;
        $scope.products = [];
    	   var search_keyword="";
-   	   $scope.companyId='03c7bc1b-52dd-3175-bab4-2e06e90efbd9';
+   	   $scope.companyId='e55cab55-30b6-4061-845a-2203be945ce4';
        //分页
        var refreshProductList=function(){
     	    $scope.products = [];
@@ -95,7 +95,7 @@ productListControllers.controller('productListCtrl',['$scope','loginSession','pr
            }else{
                $scope.pagingHidden=false;
                $scope.products = response._embedded.productPriceResponses;
-               for(var i=0;i<$scope.products.length;i++){
+               for(var i=1;i<$scope.products.length;i++){
             	   if(undefined == $scope.personnels[i].cateory
             			   || null == $scope.personnels[i].cateory){
             		   $scope.personnels[i].cateory = {};

@@ -20,10 +20,13 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.ligq.shoe.model.AccessToken;
 import com.ligq.shoe.model.EmployeeResponse;
 import com.ligq.shoe.model.RoleResponse;
 
@@ -53,11 +56,27 @@ public class ViewService {
 		 return user;
 	}
 	
-	 private EmployeeResponse getEntityByUUID(String token,String url) throws RestClientException, ClassNotFoundException{
+	@SuppressWarnings("null")
+	private EmployeeResponse getEntityByUUID(String token,String url) throws RestClientException, ClassNotFoundException{
 	 	 	RestTemplate restTemplate = new RestTemplate();
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(SECURITY_TOKEN_HEADER,token);;
-			return  restTemplate.getForObject(String.format(url, token),EmployeeResponse.class);
+
+		    MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+			headers.put("Content-Type", Lists.newArrayList(MediaType.APPLICATION_JSON_VALUE));
+			headers.put(SECURITY_TOKEN_HEADER, Lists.newArrayList(token));
+			try {
+				ResponseEntity<EmployeeResponse> exchange = restTemplate.exchange(
+						url,
+						HttpMethod.GET,  new HttpEntity<MultiValueMap>(headers),
+						EmployeeResponse.class);
+				if(null != exchange || exchange.getStatusCode().equals(HttpStatus.OK)){
+					return exchange.getBody();
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage(),e);
+				return null;
+			}
+			return null;
+			//return  restTemplate.getForObject(String.format(url, token),EmployeeResponse.class);
 	 }
 	 
 	public List<RoleResponse> findRoles(String token) {
@@ -70,7 +89,8 @@ public class ViewService {
 		
 		String rolesAddress = environment.getRequiredProperty("oauth2Roles.endpoint");
 		try {
-			ResponseEntity responseEntity = restTemplate.exchange(rolesAddress, HttpMethod.GET, new HttpEntity<MultiValueMap>(headers), Object.class);
+			ResponseEntity responseEntity = restTemplate.exchange(rolesAddress, 
+					HttpMethod.GET, new HttpEntity<MultiValueMap>(headers), Object.class);
 
 			if(null != responseEntity || responseEntity.getStatusCode().equals(HttpStatus.OK)){
 				Map rolesMap = (Map)responseEntity.getBody();

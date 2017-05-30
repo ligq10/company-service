@@ -1,7 +1,10 @@
 package com.ligq.shoe.request;
 
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ligq.shoe.model.ProductImage;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddProductPriceRequest {
@@ -24,6 +27,7 @@ public class AddProductPriceRequest {
 		
 	private String status;
 
+	private List<ProductImage> images;
 
 	public Double getPrice() {
 		return price;
@@ -95,6 +99,14 @@ public class AddProductPriceRequest {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
 	}
 	
 }

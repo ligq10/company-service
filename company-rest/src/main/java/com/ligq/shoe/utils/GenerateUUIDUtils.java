@@ -8,5 +8,8 @@ public class GenerateUUIDUtils {
 		return UUID.nameUUIDFromBytes((code).getBytes());
 	}
 
+	public static UUID getProductImageUUIDByProductIdAndImageId(String productId,String imageId){
+		return UUID.nameUUIDFromBytes((productId+imageId).getBytes());
+	}
 
 }

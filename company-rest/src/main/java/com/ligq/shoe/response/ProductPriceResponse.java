@@ -1,9 +1,13 @@
 package com.ligq.shoe.response;
 
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ligq.shoe.model.ProductImage;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ProductPriceResponse extends ResourceSupport{
@@ -27,7 +31,11 @@ public class ProductPriceResponse extends ResourceSupport{
 	private String description;
 	
 	private String status;
+	
+	private String createdTime;
 
+	private List<ProductImage> images;
+	
 	public String getUuid() {
 		return uuid;
 	}
@@ -106,6 +114,22 @@ public class ProductPriceResponse extends ResourceSupport{
 
 	public void setCateory(CategoryDetailResponse cateory) {
 		this.cateory = cateory;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
+	}
+
+	public String getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
 	}
 
 }

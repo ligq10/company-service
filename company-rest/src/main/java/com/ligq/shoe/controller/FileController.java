@@ -54,9 +54,9 @@ public class FileController {
 		try{
 			responseEntity = imageService.save(file,request,response);
 	    } catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage(),e);
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(
+            		HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -77,7 +77,7 @@ public class FileController {
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage(),e);
-            return new ResponseEntity<HttpStatus>( HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>( HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return responseEntity;
 	}
@@ -91,7 +91,7 @@ public class FileController {
 		
         Image image = imageService.findOne(uuid);
         if (null == image)
-            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
         
 	    Link link =  linkTo(methodOn(FileController.class)
 	    		.findOneImage(

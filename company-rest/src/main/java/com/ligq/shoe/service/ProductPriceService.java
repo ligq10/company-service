@@ -24,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.ligq.shoe.constants.DeleteStatus;
@@ -31,9 +32,12 @@ import com.ligq.shoe.constants.ProductPriceStatus;
 import com.ligq.shoe.controller.ProductPriceController;
 import com.ligq.shoe.entity.Category;
 import com.ligq.shoe.entity.ProductPrice;
+import com.ligq.shoe.entity.ProductPriceToImage;
+import com.ligq.shoe.model.ProductImage;
 import com.ligq.shoe.mysql.dynamic.Criteria;
 import com.ligq.shoe.mysql.dynamic.Restrictions;
 import com.ligq.shoe.repository.ProductPriceRepository;
+import com.ligq.shoe.repository.ProductPriceToImageRepository;
 import com.ligq.shoe.request.AddProductPriceRequest;
 import com.ligq.shoe.request.UpdateProductPriceRequest;
 import com.ligq.shoe.response.CategoryDetailResponse;
@@ -41,6 +45,7 @@ import com.ligq.shoe.response.ProductPriceDetailResponse;
 import com.ligq.shoe.response.ProductPriceResponse;
 import com.ligq.shoe.utils.BeanUtils;
 import com.ligq.shoe.utils.DateUtils;
+import com.ligq.shoe.utils.GenerateUUIDUtils;
 import com.ligq.shoe.utils.LinkUtils;
 
 
@@ -54,6 +59,8 @@ public class ProductPriceService {
 	private ProductPriceRepository productPriceRepository;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ProductPriceToImageRepository productPriceToImageRepository;
 	
 	public ResponseEntity<?> saveProductPrice(
 			String uuid,
@@ -78,7 +85,20 @@ public class ProductPriceService {
 		productPriceEntity.setStatus(ProductPriceStatus.ONLINE.name());
 		productPriceEntity.setStatusValue(ProductPriceStatus.ONLINE.getStatus());
 		productPriceEntity.setIsdeleted(DeleteStatus.NO.name());
-		productPriceRepository.save(productPriceEntity);
+		productPriceEntity = productPriceRepository.save(productPriceEntity);
+		
+		if(!CollectionUtils.isEmpty(addProductPriceRequest.getImages())){
+			for(ProductImage productimage : addProductPriceRequest.getImages()){
+				String productImageId = GenerateUUIDUtils.getProductImageUUIDByProductIdAndImageId(
+						productPriceEntity.getUuid(),productimage.getImageUuid()).toString();
+				ProductPriceToImage productPriceToImage = new ProductPriceToImage();
+				productPriceToImage.setUuid(productImageId);
+				productPriceToImage.setProductId(productPriceEntity.getUuid());
+				productPriceToImage.setImageId(productimage.getImageUuid());
+				productPriceToImage.setCreatedTime(currentTime);
+				productPriceToImageRepository.save(productPriceToImage);
+			}
+		}
 		
 		HttpHeaders headers = new HttpHeaders(); 
 		headers.setLocation(linkTo(methodOn(ProductPriceController.class)
@@ -136,6 +156,19 @@ public class ProductPriceService {
 		}
         productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
         		.findProductPriceByUuid(productPrice.getUuid(),request)).withSelfRel());
+        List<ProductPriceToImage> productPriceToImageList = productPriceToImageRepository
+        		.findByProductId(productPrice.getUuid());
+        if(!CollectionUtils.isEmpty(productPriceToImageList)){
+            List<ProductImage> productImageList = new ArrayList<ProductImage>();
+            for(ProductPriceToImage productPriceToImage : productPriceToImageList){
+            	ProductImage productImage = new ProductImage();
+            	productImage.setImageUuid(productPriceToImage.getImageId());
+            	productImage.setUrl("/companyserver/images/show/"+productPriceToImage.getImageId());
+            	productImageList.add(productImage);
+            }
+            productPriceResponse.setImages(productImageList);
+        }
+        
         return new ResponseEntity<Resource>(
         		new Resource<ProductPriceDetailResponse>(
         				productPriceResponse), HttpStatus.OK);
@@ -173,7 +206,21 @@ public class ProductPriceService {
 			productPrice.setStatus(productPriceStatus.name());
 			productPrice.setStatusValue(productPriceStatus.getStatus());
 		}
-		productPriceRepository.save(productPrice);
+		productPrice = productPriceRepository.save(productPrice);
+		
+		if(!CollectionUtils.isEmpty(updateProductPriceRequest.getImages())){
+			productPriceToImageRepository.deleteByProductId(productPrice.getUuid());
+			for(ProductImage productimage : updateProductPriceRequest.getImages()){
+				String productImageId = GenerateUUIDUtils.getProductImageUUIDByProductIdAndImageId(
+						productPrice.getUuid(),productimage.getImageUuid()).toString();
+				ProductPriceToImage productPriceToImage = new ProductPriceToImage();
+				productPriceToImage.setUuid(productImageId);
+				productPriceToImage.setProductId(productPrice.getUuid());
+				productPriceToImage.setImageId(productimage.getImageUuid());
+				productPriceToImage.setCreatedTime(currentTime);
+				productPriceToImageRepository.save(productPriceToImage);
+			}
+		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK); 	  
 	}
 
@@ -284,6 +331,8 @@ public class ProductPriceService {
         for (ProductPrice productPrice : productPricePage.getContent()) {
     	    ProductPriceResponse productPriceResponse = new ProductPriceResponse();
             BeanUtils.copyProperties(productPrice, productPriceResponse);
+            productPriceResponse.setCreatedTime(
+            		DateUtils.composeUTCTime(productPrice.getCreatedTime()));
             productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
             		.findProductPriceByUuid(productPrice.getUuid(),request)).withSelfRel());
             Category category = categoryService.findCategoryByUuid(productPrice.getCategoryId());

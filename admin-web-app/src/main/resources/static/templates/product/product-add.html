@@ -36,7 +36,8 @@
 				                   <option value="">请选择</option>
 				             </select>
 			            </div>
-		            </div>				    
+		            </div>	
+		            			    
 				    <!-- 用户名 -->
 				    <div class="form-group">
                         <label class="require-mark-style">*</label>
@@ -62,6 +63,56 @@
 				        	<span class="prompt_ok_span" ng-show="productAddFrom.product.unit.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
 				    </div>
+				    <!-- 评分证据 -->
+				    <div class="form-group">
+				    	<label class="require-mark-style">*</label>
+				        <label  class="col-sm-2">产品图片上传</label>
+				        <div class="col-sm-4">
+				        	<span>
+                      			<input type="file" required class="form-control clear-border" multiple="multiple" ng-model="productImage" id="productImage" name="productImage" ng-file-select/>
+							</span>
+				        	<span class="btn_group">
+				            	<button type="button" ng-click="imageUpload()" class="btn btn-primary">上传</button>
+						    	<button type="button" ng-click="clearImage()" class="btn btn-default">清空</button>
+						    	<span class="prompt_span">{{addSuccess}}</span>
+							</span>
+				        </div>
+				    </div>
+	
+				    <div class="form-group">
+					    <label class="col-sm-1">产品图片</label>
+						<div id="myCarousel" ng-show="slides.length >0" class="col-md-8 carousel slide">
+						   <!-- 轮播（Carousel）指标 -->
+						   <ol class="carousel-indicators">		   
+	  						  <li data-target="#myCarousel" ng-repeat="item in slides" data-slide-to="{{$index}}" ng-class="{active:$index==0}"></li>
+	 						</ol>   
+						   <!-- 轮播（Carousel）项目 -->
+						   <div class="carousel-inner">
+						      <div class="item" ng-class="{active:$index==0}"  ng-repeat="item in slides" style="text-align:center">
+						         <a ng-href="{{item.url}}" target="_bank"><img ng-src="{{item.url}}" style="margin:0px auto" alt="product image"></img></a>
+						      </div>
+						   </div>
+						   <!-- 轮播（Carousel）导航 -->
+						   <a class="left carousel-control" href="javascript:void(0);" ng-click="prev()" role="button" data-slide="prev">
+						      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						      <span class="sr-only">Previous</span>
+						   </a>
+						   <a class="right carousel-control" href="javascript:void(0);" ng-click="next()" role="button" data-slide="next">
+						      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						      <span class="sr-only">Next</span>
+						   </a>					      
+						   <!-- 控制按钮 -->
+	<!-- 					   <div style="text-align:center;">
+						      <input type="button" class="btn start-slide" value="Start">
+						      <input type="button" class="btn pause-slide" value="Pause">
+						      <input type="button" class="btn prev-slide" value="Previous Slide">
+						      <input type="button" class="btn next-slide" value="Next Slide">
+						      <input type="button" class="btn slide-one" value="Slide 1">
+						      <input type="button" class="btn slide-two" value="Slide 2">            
+						      <input type="button" class="btn slide-three" value="Slide 3">
+						   </div> -->
+						</div> 				    
+					</div>
 				    
 				    <!-- 备注 -->
 				    <div class="form-group">

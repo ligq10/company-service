@@ -1,9 +1,12 @@
 package com.ligq.shoe.response;
 
 
+import java.util.List;
+
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ligq.shoe.model.ProductImage;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ProductPriceDetailResponse extends ResourceSupport{
@@ -36,6 +39,8 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 	
 	private String modifiedBy;
 
+	private List<ProductImage> images;
+	
 	public String getUuid() {
 		return uuid;
 	}
@@ -146,6 +151,14 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
 	}	
 
 }

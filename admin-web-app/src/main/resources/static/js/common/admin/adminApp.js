@@ -4,7 +4,7 @@
 'use strict';
 var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers',
                   'personnelListControllers','personnelUpdateControllers','companyUpdateControllers','categoryListControllers','categoryAddControllers',
-                  'categoryUpdateControllers','productListControllers','productAddControllers']);
+                  'categoryUpdateControllers','productListControllers','productAddControllers','productUpdateControllers']);
 adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$rootScopeProvider){
     $httpProvider.defaults.headers.common['X-Token'] = $.cookie('X-Token');
 
@@ -138,6 +138,13 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             url:"/productadd",
             templateUrl:'templates/product/product-add.html',
             controller:'productAddCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('productupdate',{
+            url:"/productupdate/:uuid",
+            templateUrl:'templates/product/product-update.html',
+            controller:'productUpdateCtrl',
             permission:'PERSONNEL_UPDATE',
             father:'PERSONNEL_MANAGER'
         })

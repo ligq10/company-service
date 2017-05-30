@@ -7,128 +7,129 @@
 		<div class="main">
 			<div class="list-title">
 				<span ><img class="home-img" ng-src="images/home_icon.png"/></span>
-				<span class="navigate-header">人员管理>>人员列表>>人员修改</span>
+				<span class="navigate-header">公司管理>>产品列表>>修改产品</span>
 			</div>
 			<div class="terminal-add-total">
-				<form class="form-horizontal" name="personnelAddFrom" role="form" ng-submit="personnelUpdate()" novalidate>
-					<input type="hidden" value="{{userId}}" model="userId">
+				<form class="form-horizontal" name="productAddFrom" role="form" ng-submit="productUpdate()" novalidate>
+					<input type="hidden" value="{{product.uuid}}" model="product.uuid">
 					<!-- 登录账号 -->
 				    <div class="form-group">
-                        <label class="nosee_require-mark-style">*</label>
-				        <label class="col-sm-2">登录账号</label>
+                        <label class="require-mark-style">*</label>
+				        <label class="col-sm-2">产品名称</label>
 				        <div class="col-sm-4">
-				            <input type="text" readonly class="form-control" name="loginName" required ng-pattern="/^[0-9A-Za-z_]{1,15}$/" ng-maxlength="15" ng-minlength="6" ng-model="loginName"/>
+				            <input type="text" class="form-control" name="productName" required  ng-model="product.productName"/>
 				        </div>
-                        <span class="prompt_span" ng-show="personnelAddFrom.loginName.$dirty && personnelAddFrom.loginName.$invalid">必填，6-15位数字、字母或组合&nbsp;&nbsp;</span>
+                        <span class="prompt_span" ng-show="productAddFrom.product.productName.$invalid">必填&nbsp;&nbsp;</span>
+                        <span ng-show="product.productName">
+				        	<span class="prompt_ok_span" ng-show="productAddFrom.product.productName.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
 				    </div>
+				    <div class="form-group">
+	                    <label class="require-mark-style">*</label>
+				        <label class="col-sm-2">物品分类</label>						    
+		                <div class="col-sm-4">
+				             <select class="form-control" required
+				                     ng-model="product.categoryId"
+				                     ng-options="value.categoryId as value.categoryName for value in categoryList">
+				                   <option value="">请选择</option>
+				             </select>
+			            </div>
+		            </div>	
+		            			    
 				    <!-- 用户名 -->
 				    <div class="form-group">
                         <label class="require-mark-style">*</label>
-				        <label class="col-sm-2 ">用户名</label>
+				        <label class="col-sm-2 ">价格</label>
 				        <div class="col-sm-4">
-				            <input type="text" class="form-control" name="name" required maxlength="20" minlength="2" ng-model="name" />
+				            <input type="text" class="form-control" name="price" required ng-model="product.price" />
 				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.name.$dirty && personnelAddFrom.name.$invalid">必填，2-20个字符</span>
-				        <span ng-show="name">
-				        	<span class="prompt_ok_span" ng-show="personnelAddFrom.name.$dirty && personnelAddFrom.name.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        <span class="prompt_span" ng-show=" productAddFrom.product.price.$invalid">必填</span>
+				        <span ng-show="product.price">
+				        	<span class="prompt_ok_span" ng-show="productAddFrom.product.price.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
 				    </div>
-				    <!-- 登录密码 -->
-				    <div class="form-group">
-				    	<label class="require-mark-style">*</label>
-				        <label  class="col-sm-2">登录密码</label>
-				        <div class="col-sm-4">
-				            <input type="password" class="form-control" id="firstPassword" name="password" required ng-pattern="/^[0-9A-Za-z_]{6,15}$/" maxlength="15" minlength="6" ng-model="password"/>
-				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.password.$dirty && personnelAddFrom.password.$invalid">必填，6-15位数字、字母或组合</span>
-				        <span ng-show="password">
-				        	<span class="prompt_ok_span" ng-show="personnelAddFrom.password.$dirty && personnelAddFrom.password.$valid"><span class="glyphicon glyphicon-ok"></span></span>
-				        </span>
-				    </div>				    
-				    <!-- 角色-->
-				    <div class="form-group">
-				    	<label class="require-mark-style">*</label>
-				        <label  class="col-sm-2">权限</label>
-				        <div class="col-sm-4">
-				            <input type="text" class="form-control" name="role" required ng-model="role" ng-readonly="true"/>
-
- 				            <button type="button" class="btn btn-default input_btn_btn" id="distribute_auth_btn" data-toggle="modal" data-target="#authority_distribution_dialog">分配基本权限</button>
- 				    </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.role.$dirty && personnelAddFrom.role.$invalid">请选择用户权限</span>
-<!-- 						<span class="prompt_span" ng-show="personnelAddFrom.role.$valid && defoutPermissionsPrompt">不分配权限则默认继承该角色的全部权限</span>
- -->						<span ng-show="role">
-				        	<span class="prompt_ok_span" ng-show="personnelAddFrom.role.$dirty && personnelAddFrom.role.$valid"><span class="glyphicon glyphicon-ok"></span></span>
-				        </span>
-				    </div>	
-				    				    
+				  		   				    
 				    <!-- 联系电话 -->
 				    <div class="form-group">
 				    	<label class="require-mark-style">*</label>
-				        <label  class="col-sm-2">联系电话</label>
+				        <label  class="col-sm-2">单位</label>
 				        <div class="col-sm-4">
-				            <input type="text" ng-pattern="/^[0-9]{5,12}$/" maxlength="12" required class="form-control" value="{{tel}}" ng-model="tel" name="tel"/>
+				            <input type="text"  required class="form-control" ng-model="product.unit" name="unit"/>
 				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.tel.$dirty && personnelAddFrom.tel.$invalid">必填，请输入正确的联系电话</span>
-				        <span ng-show="tel">
-				        	<span class="prompt_ok_span" ng-show="personnelAddFrom.tel.$dirty && personnelAddFrom.tel.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        <span class="prompt_span" ng-show="productAddFrom.product.unit.$invalid">必填</span>
+				        <span ng-show="product.unit">
+				        	<span class="prompt_ok_span" ng-show="productAddFrom.product.unit.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
 				    </div>
-				    
-				    <!-- 联系邮箱 -->
+				    <!-- 评分证据 -->
 				    <div class="form-group">
-				        <label  class="col-sm-2">联系邮箱</label>
+				    	<label class="require-mark-style"></label>
+				        <label  class="col-sm-2">产品图片上传</label>
 				        <div class="col-sm-4">
-				            <input type="text" ng-pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/" id="email" maxlength="30"  name="email" class="form-control" ng-model="email"/>
-				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.email.$dirty && personnelAddFrom.email.$invalid">必填，请输入正确的邮箱</span>
-				        <span ng-show="email">
-				        	<span class="prompt_ok_span" ng-show="personnelAddFrom.email.$dirty && personnelAddFrom.email.$invalid"><span class="glyphicon glyphicon-ok"></span></span>
-				        </span>
-				    </div>
-				    <!-- 性别 -->
-				    <div class="form-group">
-				        <label  class="col-sm-2">性别</label>
-				        <div class="col-sm-4">
-				        	<input type="radio" value="male" name="gender" id="male" ng-model="gender" class="gender">男
-				        	&nbsp;&nbsp;&nbsp;
-				        	<input type="radio" value="female" name="gender" id="female" ng-model="gender" class="gender">女
+				        	<span>
+                      			<input type="file" class="form-control clear-border" multiple="multiple" ng-model="productImage" id="productImage" name="productImage" ng-file-select/>
+							</span>
+				        	<span class="btn_group">
+				            	<button type="button" ng-click="imageUpload()" class="btn btn-primary">上传</button>
+						    	<button type="button" ng-click="clearImage()" class="btn btn-default">清空</button>
+						    	<span class="prompt_span">{{addSuccess}}</span>
+							</span>
 				        </div>
 				    </div>
-				    
-				    <!-- 出生年月 -->
+	
 				    <div class="form-group">
-				        <label  class="col-sm-2">出生年月</label>
-						<div class="input-append date col-sm-4" id="birthday">
-							<input   type="text" class="add-on form-control Wdate" name="birthday" ng-model="birthday">
-						</div>
-				    </div>				   
+					    <label class="col-sm-1">产品图片</label>
+						<div id="myCarousel" ng-show="slides.length >0" class="col-md-8 carousel slide">
+						   <!-- 轮播（Carousel）指标 -->
+						   <ol class="carousel-indicators">		   
+	  						  <li data-target="#myCarousel" ng-repeat="item in slides" data-slide-to="{{$index}}" ng-class="{active:$index==0}"></li>
+	 						</ol>   
+						   <!-- 轮播（Carousel）项目 -->
+						   <div class="carousel-inner">
+						      <div class="item" ng-class="{active:$index==0}"  ng-repeat="item in slides" style="text-align:center">
+						         <a ng-href="{{item.url}}" target="_bank"><img ng-src="{{item.url}}" style="margin:0px auto" alt="product image"></img></a>
+						      </div>
+						   </div>
+						   <!-- 轮播（Carousel）导航 -->
+						   <a class="left carousel-control" href="javascript:void(0);" ng-click="prev()" role="button" data-slide="prev">
+						      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						      <span class="sr-only">Previous</span>
+						   </a>
+						   <a class="right carousel-control" href="javascript:void(0);" ng-click="next()" role="button" data-slide="next">
+						      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						      <span class="sr-only">Next</span>
+						   </a>					      
+						   <!-- 控制按钮 -->
+	<!-- 					   <div style="text-align:center;">
+						      <input type="button" class="btn start-slide" value="Start">
+						      <input type="button" class="btn pause-slide" value="Pause">
+						      <input type="button" class="btn prev-slide" value="Previous Slide">
+						      <input type="button" class="btn next-slide" value="Next Slide">
+						      <input type="button" class="btn slide-one" value="Slide 1">
+						      <input type="button" class="btn slide-two" value="Slide 2">            
+						      <input type="button" class="btn slide-three" value="Slide 3">
+						   </div> -->
+						</div> 				    
+					</div>
 				    
-				    <!-- 地址 -->
-				    <div class="form-group">
-				        <label  class="col-sm-2">地址</label>
-				        <div class="col-sm-4">
-				            <input type="text" class="form-control" name="homeAddress" maxlength="100" ng-model="homeAddress"/>
-				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.homeAddress.$dirty && personnelAddFrom.homeAddress.$invalid">不能超过100个字符</span>
-				    </div>				    
 				    <!-- 备注 -->
 				    <div class="form-group">
 				        <label  class="col-sm-2">备注</label>
 				        <div class="col-sm-4">
-				            <textarea  id="" name="remarks" type="text" class="form-control" rows="6" maxlength="100" ng-model="remarks"></textarea>
+				            <textarea  id="description" name="description" type="text" class="form-control" rows="6" maxlength="100" ng-model="product.description"></textarea>
 				        </div>
-				        <span class="prompt_span" ng-show="personnelAddFrom.remarks.$dirty && personnelAddFrom.remarks.$invalid">不能超过100个字符</span>
-				        <span ng-show="remarks">
-				        <span class="prompt_ok_span" ng-show="personnelAddFrom.remarks.$dirty && personnelAddFrom.remarks.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        <span class="prompt_span personnel_prompt_textarea" ng-show="productAddFrom.product.description.$invalid">不能超过100个字符</span>
+				        <span ng-show="product.description">
+				        <span class="prompt_ok_span" ng-show="productAddFrom.product.description.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
 				    </div>
-				    
+				    				    
 				    <div class="form-group">
 				        <div class="col-sm-2"></div>
 				        <div class="col-sm-4 btn-group">
 				        	<span class="btn_group">
-				            	<button type="submit" ng-disabled="!(personnelAddFrom.$valid && id_error_ishidden)" class="btn btn-primary">保存</button>
-						    	<button type="button" ui-sref="personnellist" class="btn btn-default">返回</button>
+				            	<button type="submit" ng-disabled="!(productAddFrom.$valid)" class="btn btn-primary">保存</button>
+						    	<button type="button" ui-sref="productlist" class="btn btn-default">返回</button>
 						    	<span class="prompt_span">{{addSuccess}}</span>
 							</span>
 				        </div>

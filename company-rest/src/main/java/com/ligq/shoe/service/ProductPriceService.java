@@ -124,7 +124,7 @@ public class ProductPriceService {
 	   List<ProductPriceResponse> result = new ArrayList<ProductPriceResponse>();
        for (ProductPrice productPrice : productPricePage.getContent()) {
     	    ProductPriceResponse productPriceResponse = new ProductPriceResponse();
-            BeanUtils.copyProperties(productPrice, productPriceResponse);
+            BeanUtils.copyPropertiesIgnoreNullValue(productPrice, productPriceResponse);
             productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
             		.findProductPriceByUuid(
             				productPrice.getUuid(),request)).withSelfRel());
@@ -144,7 +144,7 @@ public class ProductPriceService {
 			return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 		}
    	    ProductPriceDetailResponse productPriceResponse = new ProductPriceDetailResponse();    	 
-		BeanUtils.copyProperties(productPrice, productPriceResponse);
+		BeanUtils.copyPropertiesIgnoreNullValue(productPrice, productPriceResponse);
 		if(null != productPrice.getCreatedTime()){
 			productPriceResponse.setCreatedTime(
 					DateUtils.composeUTCTime(productPrice.getCreatedTime()));
@@ -154,6 +154,15 @@ public class ProductPriceService {
 			productPriceResponse.setModifiedTime(
 					DateUtils.composeUTCTime(productPrice.getModifiedTime()));
 		}
+        Category category = categoryService.findCategoryByUuid(productPrice.getCategoryId());
+        if(null != category){
+    		CategoryDetailResponse categoryResponse = new CategoryDetailResponse();
+    		BeanUtils.copyProperties(category, categoryResponse);
+    		categoryResponse.setCreatedTime(
+    				DateUtils.composeUTCTime(category.getCreatedTime()));
+    		productPriceResponse.setCateory(categoryResponse);
+        }
+
         productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
         		.findProductPriceByUuid(productPrice.getUuid(),request)).withSelfRel());
         List<ProductPriceToImage> productPriceToImageList = productPriceToImageRepository
@@ -267,7 +276,7 @@ public class ProductPriceService {
 	    List<ProductPriceResponse> result = new ArrayList<ProductPriceResponse>();
         for (ProductPrice productPrice : productPricePage.getContent()) {
     	    ProductPriceResponse productPriceResponse = new ProductPriceResponse();
-            BeanUtils.copyProperties(productPrice, productPriceResponse);
+            BeanUtils.copyPropertiesIgnoreNullValue(productPrice, productPriceResponse);
             productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)
             		.findProductPriceByUuid(productPrice.getUuid(),request)).withSelfRel());
             result.add(productPriceResponse);
@@ -330,7 +339,7 @@ public class ProductPriceService {
 	    List<ProductPriceResponse> result = new ArrayList<ProductPriceResponse>();
         for (ProductPrice productPrice : productPricePage.getContent()) {
     	    ProductPriceResponse productPriceResponse = new ProductPriceResponse();
-            BeanUtils.copyProperties(productPrice, productPriceResponse);
+            BeanUtils.copyPropertiesIgnoreNullValue(productPrice, productPriceResponse);
             productPriceResponse.setCreatedTime(
             		DateUtils.composeUTCTime(productPrice.getCreatedTime()));
             productPriceResponse.add(linkTo(methodOn(ProductPriceController.class)

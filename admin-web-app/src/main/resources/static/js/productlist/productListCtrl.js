@@ -95,13 +95,6 @@ productListControllers.controller('productListCtrl',['$scope','loginSession','pr
            }else{
                $scope.pagingHidden=false;
                $scope.products = response._embedded.productPriceResponses;
-               for(var i=1;i<$scope.products.length;i++){
-            	   if(undefined == $scope.personnels[i].cateory
-            			   || null == $scope.personnels[i].cateory){
-            		   $scope.personnels[i].cateory = {};
-            		   $scope.personnels[i].cateory.name ="";
-            	   }
-               }
            }
        };   
 }]);

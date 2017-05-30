@@ -1,7 +1,6 @@
 package com.ligq.shoe.response;
 
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
@@ -17,6 +16,8 @@ public class ProductPriceResponse extends ResourceSupport{
 	private String productId;
 
 	private String productName;
+	
+	private String categoryId;
 	
 	private CategoryDetailResponse cateory;
 
@@ -132,4 +133,13 @@ public class ProductPriceResponse extends ResourceSupport{
 		this.createdTime = createdTime;
 	}
 
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	
 }

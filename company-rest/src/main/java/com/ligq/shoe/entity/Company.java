@@ -81,7 +81,7 @@ public class Company {
 
 	
 	@Column(name="fax_no",length=128)
-	private String fax_no;
+	private String faxNo;
 
 	
 	@Column(name="group_id",length=64)
@@ -281,12 +281,12 @@ public class Company {
 		this.email = email;
 	}
 
-	public String getFax_no() {
-		return fax_no;
+	public String getFaxNo() {
+		return faxNo;
 	}
 
-	public void setFax_no(String fax_no) {
-		this.fax_no = fax_no;
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
 	}
 
 	public String getGroupId() {

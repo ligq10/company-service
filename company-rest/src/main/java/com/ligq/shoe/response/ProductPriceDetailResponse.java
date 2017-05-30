@@ -21,6 +21,10 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 
 	private String companyId;
 
+	private String categoryId;
+	
+	private CategoryDetailResponse cateory;
+	
 	private String unit;
 	
 	private String icon;
@@ -159,6 +163,22 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 
 	public void setImages(List<ProductImage> images) {
 		this.images = images;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public CategoryDetailResponse getCateory() {
+		return cateory;
+	}
+
+	public void setCateory(CategoryDetailResponse cateory) {
+		this.cateory = cateory;
 	}	
 
 }

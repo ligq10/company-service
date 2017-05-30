@@ -16,19 +16,19 @@
                         <label class="nosee_require-mark-style">*</label>
 				        <label class="col-sm-2">企业名称</label>
 				        <div class="col-sm-4">
-				            <input type="text" readonly class="form-control" name="name" required  ng-model="comapny.name"/>
+				            <input type="text" class="form-control" name="name" required  ng-model="comapny.name"/>
 				        </div>
 				    </div>
 				    <!-- 用户名 -->
 				    <div class="form-group">
-                        <label class="require-mark-style">*</label>
+                        <label class="require-mark-style"></label>
 				        <label class="col-sm-2 ">传真</label>
 				        <div class="col-sm-4">
 				            <input type="text" class="form-control" name="faxNo" required ng-model="comapny.faxNo" />
 				        </div>
-				        <span class="prompt_span" ng-show="companyFrom.comapny.faxNo.$dirty && companyFrom.comapny.faxNo.$invalid">必填</span>
+				        <span class="prompt_span" ng-show="companyFrom.comapny.faxNo.$invalid">必填</span>
 				        <span ng-show="name">
-				        	<span class="prompt_ok_span" ng-show="companyFrom.comapny.faxNo.$dirty && companyFrom.comapny.faxNo.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        	<span class="prompt_ok_span" ng-show="companyFrom.comapny.faxNo.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
 				    </div>
 			    			    				    

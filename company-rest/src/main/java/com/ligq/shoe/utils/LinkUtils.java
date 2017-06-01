@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.util.StringUtils;
 
+
 public class LinkUtils {
 
 	public static String getHost(HttpServletRequest request) {
@@ -22,7 +23,7 @@ public class LinkUtils {
 	}
 	
 	public static List<Link> prepareLinks(int page, int size,
-			HttpServletRequest request, Page result,String pathParams) {
+			HttpServletRequest request, Page<?> result,String pathParams) {
 		List<Link> list = new ArrayList<>();
 		if (result.hasNext()) {
 			list.add(new Link(getHost(request) + request.getRequestURI()
@@ -30,6 +31,24 @@ public class LinkUtils {
 					Link.REL_NEXT));
 		}
 		if (result.hasPrevious()) {
+			list.add(new Link(getHost(request) + request.getRequestURI()
+					+ "?page=" + (page - 1) + "&size=" + size+pathParams,
+					Link.REL_PREVIOUS));
+		}
+		list.add(new Link(getHost(request) + request.getRequestURI()
+				+  "?page=" + page + "&size=" + size+pathParams, Link.REL_SELF));
+		return list;
+	}
+	
+	public static List<Link> prepareLinks(int page, int size,
+			HttpServletRequest request, boolean hasNext,String pathParams) {
+		List<Link> list = new ArrayList<>();
+		if (hasNext) {
+			list.add(new Link(getHost(request) + request.getRequestURI()
+					+  "?page=" + (page + 1) + "&size=" + size+pathParams,
+					Link.REL_NEXT));
+		}
+		if (page > 0) {
 			list.add(new Link(getHost(request) + request.getRequestURI()
 					+ "?page=" + (page - 1) + "&size=" + size+pathParams,
 					Link.REL_PREVIOUS));

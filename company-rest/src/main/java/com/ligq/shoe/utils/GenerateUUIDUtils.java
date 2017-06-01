@@ -12,4 +12,8 @@ public class GenerateUUIDUtils {
 		return UUID.nameUUIDFromBytes((productId+imageId).getBytes());
 	}
 
+	public static UUID getOrderProductItemUUIDByOrderIdAndProductId(String orderId,String productId){
+		return UUID.nameUUIDFromBytes((orderId+productId).getBytes());
+	}
+
 }

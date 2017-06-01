@@ -260,7 +260,7 @@ public class ProductPriceService {
 		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
-
+/*
 	public ResponseEntity<?> findProductPricesbycondition(String uuid, String productName,
 			String status, Pageable pageable, HttpServletRequest request) {
 		StringBuffer pathParams = new StringBuffer();
@@ -287,7 +287,7 @@ public class ProductPriceService {
 				list);
 		 return new ResponseEntity<PagedResources>(pagedResources, HttpStatus.OK); 	  
 	}
-	
+*/	
 
 	@SuppressWarnings("unused")
 	private Page<ProductPrice> findByProductPriceId(String uuid,
@@ -325,12 +325,22 @@ public class ProductPriceService {
 
 
 
-	public ResponseEntity<?> findProductPricesbycondition(String uuid,
-			String keyword, Pageable pageable, HttpServletRequest request) {
+	public ResponseEntity<?> findProductPricesbycondition(String companyId,
+			String keyword,String categoryId, Pageable pageable, HttpServletRequest request) {
 		StringBuffer pathParams = new StringBuffer();
 		pathParams.append(StringUtils.isEmpty(keyword)?"&keyword=":"&keyword="+keyword);
-		Page<ProductPrice> productPricePage = productPriceRepository.findProductPricesByKeyword(
-				uuid, keyword, pageable);
+		pathParams.append(StringUtils.isEmpty(categoryId)?"&categoryId=":"&categoryId="+categoryId);
+
+		Page<ProductPrice> productPricePage = null;
+		if(StringUtils.isEmpty(categoryId)){
+			productPricePage = productPriceRepository.findProductPricesByKeyword(
+					companyId, keyword, pageable);
+		}else{
+			productPricePage = productPriceRepository
+					.findProductPricesByCategoryIdAndKeyword(
+							companyId, categoryId, keyword, pageable);
+		}
+			
 	    if(null == productPricePage || productPricePage.getContent().isEmpty()){
 		   return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 	    }
@@ -363,4 +373,7 @@ public class ProductPriceService {
 				 pagedResources, HttpStatus.OK); 	 
 	}
 	
+	public ProductPrice findOne(String uuid){
+		return productPriceRepository.findOne(uuid);
+	}
 }

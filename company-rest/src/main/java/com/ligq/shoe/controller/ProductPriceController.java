@@ -96,6 +96,7 @@ public class ProductPriceController {
 	public HttpEntity<?> findProductPricesbycondition(
 			@PathVariable String uuid,
 			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+			@RequestParam(value = "categoryId", required = false, defaultValue = "") String categoryId,
 			@PageableDefault(page = 0, size = 20) Pageable pageable,
 			HttpServletRequest request){
 		
@@ -103,7 +104,7 @@ public class ProductPriceController {
 		try {	
    		    responseEntity = productPriceService
    		    		.findProductPricesbycondition(
-   		    				uuid,keyword,pageable,request);
+   		    				uuid,keyword,categoryId,pageable,request);
 		} catch (Exception e) {			
 			logger.error(e.getMessage(),e);						
 			responseEntity= new ResponseEntity<HttpStatus>(

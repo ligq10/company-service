@@ -26,4 +26,12 @@ public interface ProductPriceRepository extends
 	Page<ProductPrice> findProductPricesByKeyword(
 			@Param("companyId") String companyId, @Param("keyword") String keyword,Pageable pageable);
 
+	@RestResource(exported = false)
+	@Query(value = "SELECT pp.* FROM product_price pp LEFT JOIN catalog c ON pp.category_id = c.uuid where (pp.product_name LIKE %:keyword% OR c.name LIKE %:keyword%) AND pp.company_id =:companyId AND pp.category_id =:categoryId AND isdeleted ='NO'\n#pageable\n", 
+		countQuery = "SELECT count(*) FROM product_price pp LEFT JOIN catalog c ON pp.category_id = c.uuid where (pp.product_name LIKE %:keyword% OR c.name LIKE %:keyword%) AND pp.company_id =:companyId AND pp.category_id =:categoryId AND isdeleted ='NO'", 
+		nativeQuery = true)
+	Page<ProductPrice> findProductPricesByCategoryIdAndKeyword(
+			@Param("companyId") String companyId,@Param("categoryId") String categoryId,
+			@Param("keyword") String keyword,Pageable pageable);
+
 }

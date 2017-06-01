@@ -30,6 +30,8 @@ dependencies {
     )
 
     compile(
+    		'io.springfox:springfox-swagger2:2.7.0',
+    		'io.springfox:springfox-swagger-ui:2.7.0',
             "com.netflix.hystrix:hystrix-javanica:1.4.12",
             'com.belerweb:pinyin4j:2.5.0',                    
             'net.sf.json-lib:json-lib:2.4:jdk15',

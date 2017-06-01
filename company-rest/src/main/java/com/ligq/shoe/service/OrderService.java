@@ -236,7 +236,7 @@ public class OrderService {
 		pathParams.append(StringUtils.isEmpty(currentStatus)?"":"&currentStatus="+currentStatus);
 		pathParams.append(sort);
 		List<Integer> currentStatusList = new ArrayList<Integer>();
-		if(StringUtils.isEmpty(currentStatus)){
+		if(!StringUtils.isEmpty(currentStatus)){
 			String[] currentStatusArr = currentStatus.split(",");
 			if(null != currentStatusArr && currentStatusArr.length > 0){
 				for(String status : currentStatusArr){

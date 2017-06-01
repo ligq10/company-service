@@ -51,7 +51,7 @@ public class OrderController {
     		HttpServletRequest request) {
 
     	if(StringUtils.isEmpty(orderRequest.getExpedite())){
-    		orderRequest.setExpedite(LogicStatus.ON.getValue());
+    		orderRequest.setExpedite(LogicStatus.NO.getValue());
     	}else{
     		LogicStatus logicStatus = LogicStatus
     				.getLogicStatusByValue(orderRequest.getExpedite());
@@ -62,7 +62,7 @@ public class OrderController {
     	}
 
     	if(StringUtils.isEmpty(orderRequest.getPayStatus())){
-    		orderRequest.setPayStatus(LogicStatus.ON.getValue());
+    		orderRequest.setPayStatus(LogicStatus.NO.getValue());
     	}else{
     		LogicStatus logicStatus = LogicStatus
     				.getLogicStatusByValue(orderRequest.getPayStatus());

@@ -4,7 +4,7 @@ import org.springframework.util.StringUtils;
 
 public enum LogicStatus {
 	YES("YES","是"),
-	ON("ON","否");
+	NO("NO","否");
 	
 	private String value;
 	private String desc;
@@ -28,7 +28,7 @@ public enum LogicStatus {
 		}
 		
 		for(LogicStatus logicStatus : LogicStatus.values()){
-			if(value.equals(logicStatus.getValue())){
+			if(value.equalsIgnoreCase(logicStatus.getValue())){
 				return logicStatus;
 			}
 		}

@@ -129,6 +129,7 @@ public class OrderService {
             	OrderToProductItem orderToProductItem = new OrderToProductItem();
             	String uuid = GenerateUUIDUtils.getOrderProductItemUUIDByOrderIdAndProductId(
             			orders.getUuid(),productId).toString();
+            	orderToProductItem.setUuid(uuid);
             	orderToProductItem.setOrderId(orders.getUuid());
             	orderToProductItem.setProductId(productId);           
             	orderToProductItem.setAmount(amount);   

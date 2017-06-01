@@ -25,8 +25,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-data-rest",
             "org.springframework.boot:spring-boot-starter-data-jpa",            
             "org.springframework.hateoas:spring-hateoas",
-            "org.springframework.boot:spring-boot-starter-actuator",
-            "org.springframework.cloud:spring-cloud-starter-hystrix"
+            "org.springframework.boot:spring-boot-starter-actuator"
     )
 
     compile(

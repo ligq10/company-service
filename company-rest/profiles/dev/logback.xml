@@ -5,12 +5,25 @@
 			<pattern>%d-[%thread] %-5level - %msg%n</pattern>
 		</encoder>
 	</appender>
-
+	<appender name="company"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/company-rest.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>logs/company-rest_%d{yyyy-MM-dd-HH}.log
+			</FileNamePattern>
+			<MaxHistory>720</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n</pattern>
+		</layout>
+	</appender>
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="company" />
 	</root>
 
-	<logger name="com.changhongit.loving" level="INFO">
+	<logger name="com.ligq.shoe" level="INFO">
 	</logger>
 
 </configuration>

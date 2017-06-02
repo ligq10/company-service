@@ -42,6 +42,9 @@ public class ShippingInfo implements Serializable{
 	@Column(name = "service_employee_id")
     private String serviceEmployeeId;
     
+	@Column(name = "pay_status",length=64)
+	private String payStatus;
+	
     @Column(name = "comment")
     private String comment;
 
@@ -117,4 +120,13 @@ public class ShippingInfo implements Serializable{
 		this.comment = comment;
 	}
 
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	
 }

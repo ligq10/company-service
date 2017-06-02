@@ -2,7 +2,7 @@
  * Created by Administrator on 15-1-28.
  */
 'use strict';
-var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers',
+var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers','orderListControllers','orderUpdateControllers',
                   'personnelListControllers','personnelUpdateControllers','companyUpdateControllers','categoryListControllers','categoryAddControllers',
                   'categoryUpdateControllers','productListControllers','productAddControllers','productUpdateControllers']);
 adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$rootScopeProvider){
@@ -127,6 +127,20 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             permission:'FEEDBACK_UPDATE',
             father:'FEEDBACK_AUDIT_MANAGER'             
         })*/
+        .state('orderlist',{
+            url:"/orderlist",
+            templateUrl:'templates/order/order-list.html',
+            controller:'orderListCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('orderupdate',{
+            url:"/orderupdate/:uuid",
+            templateUrl:'templates/order/order-update.html',
+            controller:'orderUpdateCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
         .state('productlist',{
             url:"/productlist",
             templateUrl:'templates/product/product-list.html',

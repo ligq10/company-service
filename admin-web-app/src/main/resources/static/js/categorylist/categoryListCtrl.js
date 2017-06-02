@@ -7,7 +7,8 @@ var categoryListControllers=angular.module('categoryListControllers',['categoryL
 categoryListControllers.controller('categoryListCtrl',['$scope','$stateParams','$upload','$rootScope','categoryListFactory',
     function($scope,$stateParams,$upload,$rootScope,categoryListFactory) {
     $scope.catalogUuid = "03c7bc1b-52dd-3175-bab4-2e06e90efbd9";
-	
+	var search_keyword="";
+
 	$scope.categoryList = [];
     $scope.pageSize=PAGESIZE_DEFAULT;
 	$scope.currentPage=CURRENTPAGE_INIT;
@@ -63,6 +64,17 @@ categoryListControllers.controller('categoryListCtrl',['$scope','$stateParams','
 	}					
 
 	initcategoryList();
+	
+    // 搜索
+    $scope.search=function() {
+        $scope.currentPage=CURRENTPAGE_INIT;//当前第几页
+        $scope.pageSize=PAGESIZE_DEFAULT;
+	       if($scope.search_keyword != undefined){
+	    		search_keyword = $scope.search_keyword;
+	       }  
+	       refreshOrderList();
+    }
+
 	
     //shoe翻页 点击下一页，上一页，首页，尾页按钮
     $scope.pageChanged=function(){

@@ -28,6 +28,7 @@ public class OrderDetailResponse extends ResourceSupport {
 	private String shippingAddress;
 	private String expedite;
 	private String payStatus;
+	private String payStatusDesc;
 	private List<ShippingInfoResponse> shippingInfos;
 	private List<OrderToProductItem> orderItems;
 	
@@ -202,6 +203,14 @@ public class OrderDetailResponse extends ResourceSupport {
 
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
+	}
+
+	public String getPayStatusDesc() {
+		return payStatusDesc;
+	}
+
+	public void setPayStatusDesc(String payStatusDesc) {
+		this.payStatusDesc = payStatusDesc;
 	}
 
 }

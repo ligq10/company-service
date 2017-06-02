@@ -9,6 +9,8 @@ public class ShippingInfoAddRequest {
     
     private String comment;
 
+    private String payStatus;
+    
     private String waiterId;
     
     private Double settAmount;//结算金额
@@ -57,6 +59,14 @@ public class ShippingInfoAddRequest {
 
 	public void setServiceEmployeeId(String serviceEmployeeId) {
 		this.serviceEmployeeId = serviceEmployeeId;
+	}
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
 	}
     
 }

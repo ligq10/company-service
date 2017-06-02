@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ligq.shoe.constants.DeleteStatus;
 import com.ligq.shoe.constants.OrderStatus;
+import com.ligq.shoe.constants.PayStatus;
 import com.ligq.shoe.entity.OrderToProductItem;
 import com.ligq.shoe.entity.Orders;
 import com.ligq.shoe.entity.ProductPrice;
@@ -190,6 +191,8 @@ public class OrderService {
             status = order.getCurrentStatus();
         }
         orderDetailResponse.setCurrentStatusDesc(OrderStatus.getStatusName(status));
+        orderDetailResponse.setPayStatusDesc(
+        		PayStatus.getPayStatusByValue(order.getPayStatus()).getDesc());
         List<ShippingInfo> shippingInfoList = shippingInfoService
         				.findByOrderIdOrderByCreatedDateDesc(order.getUuid());
 		List<ShippingInfoResponse> shippingInfos = new ArrayList<ShippingInfoResponse>();
@@ -266,6 +269,9 @@ public class OrderService {
 	            status = order.getCurrentStatus();
 	        }
 	        orderDetailResponse.setCurrentStatusDesc(OrderStatus.getStatusName(status));
+	        orderDetailResponse.setPayStatusDesc(
+	        		PayStatus.getPayStatusByValue(order.getPayStatus()).getDesc());
+
 	        List<ShippingInfo> shippingInfoList = shippingInfoService
 	        				.findByOrderIdOrderByCreatedDateDesc(order.getUuid());
 			List<ShippingInfoResponse> shippingInfos = new ArrayList<ShippingInfoResponse>();
@@ -389,6 +395,11 @@ public class OrderService {
             order.setServiceEmployeeId(null);
         } else {
             order.setCurrentStatus(shippingInfo.getStatus());
+        }
+        
+        if(!StringUtils.isEmpty(shippingInfo.getPayStatus())
+        		&& PayStatus.YES.getValue().equalsIgnoreCase(shippingInfo.getPayStatus())){
+        	order.setPayStatus(shippingInfo.getPayStatus());
         }
         ordersRepository.save(order);
     }

@@ -12,7 +12,7 @@ public enum OrderStatus {
     /**
      * 已确认
      */
-    WAITING_DISTRIBUTI(2,"待分配"),
+    WAITING_DISTRIBUTI(2,"已确认"),
     /**
      * 已分配
      */
@@ -30,16 +30,16 @@ public enum OrderStatus {
     /**
      * 上门中
      */
-    COMEING(6, "上门中"),
+    COMEING(6, "商家已接单"),
     /**
      * 服务中
      */
-    IN_SERVICE(7, "服务中"),
+    IN_SERVICE(7, "送货中"),
     
     /**
      * 服务中
      */
-    SERVICE_COMPLETION(8, "服务已完成"),
+    SERVICE_COMPLETION(8, "已完成"),
     
     /**
      * 未回访(平台)、待评价(app)
@@ -52,7 +52,7 @@ public enum OrderStatus {
     /**
      * 服务商取消
      */
-    COMPANY_CANCEL(11, "服务商取消"),
+    COMPANY_CANCEL(11, "订单取消"),
     /**
      * 用户取消
      */

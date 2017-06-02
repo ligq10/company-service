@@ -1,0 +1,217 @@
+<html>
+<head>
+    <!-- Load CSS files-->
+    <script src="js/personneladd/personnel.js"></script>
+</head>
+	<body>
+		<div class="main">
+			<div class="list-title">
+				<span ><img class="home-img" ng-src="images/home_icon.png"/></span>
+				<span class="navigate-header">公司管理>>订单列表>>修改订单</span>
+			</div>
+			<div class="terminal-add-total">
+				<form class="form-horizontal" name="orderAddFrom" role="form" ng-submit="orderUpdate()" novalidate>
+					<input type="hidden" value="{{order.uuid}}" model="order.uuid">
+					<!-- 登录账号 -->
+				    <div class="form-group">
+                        <label class="nosee_require-mark-style">*</label>
+				        <label class="col-sm-2">订单号</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly class="form-control" name="orderNo" ng-model="order.orderNo"/>
+				        </div>
+                        <span class="prompt_span" ng-show="orderAddFrom.order.orderNo.$invalid">必填，6-15位数字、字母或组合&nbsp;&nbsp;</span>
+				    </div>
+
+				    <div class="form-group">
+                        <label class="nosee_require-mark-style">*</label>
+				        <label class="col-sm-2">订单状态</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly class="form-control" name="currentStatusDesc" ng-model="order.currentStatusDesc"/>
+				        </div>
+                        <span class="prompt_span" ng-show="orderAddFrom.order.currentStatusDesc.$invalid">必填&nbsp;&nbsp;</span>
+				    </div>
+
+				    <!-- 用户名 -->
+				    <div class="form-group">
+                        <label class="require-mark-style">*</label>
+				        <label class="col-sm-2 ">客户姓名</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly class="form-control" name="customerName" ng-model="order.customerName" />
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.customerName.$invalid">必填</span>
+				        <span ng-show="customerName">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.customerNamee.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+			 				    				    
+				    <!-- 联系电话 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">客户联系电话</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly class="form-control"  ng-model="order.customerTel" name="customerTel"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.customerTel.$invalid">必填</span>
+				        <span ng-show="tel">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.customerTel.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+   				    <div class="form-group">
+				        <label  class="col-sm-2">订单内容</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly name="serviceContent" class="form-control" ng-model="order.serviceContent"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.serviceContent.$invalid">必填</span>
+				        <span ng-show="serviceContent">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.serviceContent.$invalid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+				    
+				    <!-- 联系邮箱 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">送货地址</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly name="shippingAddress" class="form-control" ng-model="order.shippingAddress"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.shippingAddress.$invalid">必填</span>
+				        <span ng-show="shippingAddress">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.shippingAddress.$invalid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+				    <!-- 联系邮箱 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">订单金额</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly  name="orderAmount" class="form-control" ng-model="order.orderAmount"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.orderAmount.$invalid">必填</span>
+				        <span ng-show="orderAmount">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.orderAmount.$invalid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+				    <div class="form-group">
+				        <label  class="col-sm-2">结算金额</label>
+				        <div class="col-sm-4">
+				            <input type="text"  name="settAmount" class="form-control" ng-model="order.settAmount"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.settAmount.$invalid">必填</span>
+				        <span ng-show="settAmount">
+				        	<span class="prompt_ok_span" ng-show="orderAddFrom.order.settAmount.$invalid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+
+				    <!-- 性别 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">付款状态</label>
+				        <div class="col-sm-4">
+				        	<input type="radio" value="NO" name="gender" id="NO" ng-model="order.payStatus" class="gender">未付款
+				        	&nbsp;&nbsp;&nbsp;
+				        	<input type="radio" value="YES" name="gender" id="YES" ng-model="order.payStatus" class="gender">已付款
+				        </div>
+				    </div>
+				    			    			    
+				    <!-- 地址 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">下单时间</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly  name="createdDate" class="form-control" ng-model="order.createdDate"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.createdDate.$invalid">不能超过100个字符</span>
+				    </div>	
+				    			    
+				    <div class="form-group">
+				        <label  class="col-sm-2">送货时间</label>
+				        <div class="col-sm-4">
+				            <input type="text" readonly name="serviceTime" class="form-control" ng-model="order.serviceTime"/>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.order.serviceTime.$invalid">不能超过100个字符</span>
+				    </div>				    				    
+				    
+   				    <div class="form-group">
+	                    <label class="require-mark-style">*</label>
+				        <label class="col-sm-2">更新订单状态</label>						    
+		                <div class="col-sm-4">
+				             <select class="form-control" required
+				                     ng-model="status"
+				                     ng-options="value.value as value.desc for value in statusList">
+				                   <option value="">请选择</option>
+				             </select>
+			            </div>
+		            </div>	
+				    				    
+				    <!-- 备注 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">备注</label>
+				        <div class="col-sm-4">
+				            <textarea  id="comment" name="comment" type="text" class="form-control" rows="6" maxlength="100" ng-model="comment"></textarea>
+				        </div>
+				        <span class="prompt_span" ng-show="orderAddFrom.comment.$invalid">不能超过100个字符</span>
+				        <span ng-show="comment">
+				        <span class="prompt_ok_span" ng-show="orderAddFrom.comment.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+				    
+				    <div class="form-group">
+				        <div class="col-sm-2"></div>
+				        <div class="col-sm-4 btn-group">
+				        	<span class="btn_group">
+				            	<button type="submit" ng-disabled="!(orderAddFrom.$valid)" class="btn btn-primary">保存</button>
+						    	<button type="button" ui-sref="orderlist" class="btn btn-default">返回</button>
+						    	<span class="prompt_span">{{addSuccess}}</span>
+							</span>
+				        </div>
+				    </div>
+				</form>
+			</div>
+			<div class="terminal-list-table">
+				<table class="table table-bordered table-hover">
+					<caption>订单流程</caption>
+					<thead class="table_thead">
+						<tr>
+							<th width="10%">序号</th>
+							<th width="15%">更新时间</th>
+							<th width="10%">订单状态</th>
+							<th width="13%">备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in shippingInfos" class="terminal-table-data-tr">
+	            	        <td align="center">{{$index+1}}</td>	            			
+	            			<td align="center">{{entry.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+	            			<td align="center">{{entry.statusDesc}}</td>
+	            			<td align="center" data-toggle="tooltip" title="{{entry.comment}}" style="text-overflow:ellipsis;white-space:nowrap;overflow : hidden;">{{entry.comment}}</td>
+	        			</tr>
+        			</tbody>
+				</table>
+			</div>			
+			<div class="terminal-list-table">
+				<table class="table table-bordered table-hover">
+					<caption>订货清单</caption>
+					<thead class="table_thead">
+						<tr>
+							<th width="10%">序号</th>
+							<th width="15%">产品名称</th>
+							<th width="10%">购买数量</th>
+							<th width="10%">单价</th>
+							<th width="10%">单位</th>							
+							<th width="10%">总价</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in orderItems" class="terminal-table-data-tr">
+	            	        <td align="center">{{$index+1}}</td>	            			
+	            			<td align="center">{{entry.name}}</td>
+	            			<td align="center">{{entry.amount}}</td>
+	            			<td align="center">{{entry.price}}</td>
+	            			<td align="center">{{entry.unit}}</td>
+	            			<td align="center" data-toggle="tooltip" title="{{entry.subtotal}}" style="text-overflow:ellipsis;white-space:nowrap;overflow : hidden;">{{entry.subtotal}}</td>
+	        			</tr>
+        			</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

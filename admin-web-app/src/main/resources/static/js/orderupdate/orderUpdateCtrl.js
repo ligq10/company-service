@@ -39,6 +39,49 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
 
                      ];
 
+    function initOrderStatus(order){
+    	if(undefined == order
+    		|| null == order){
+    		return false;
+    	}
+    	
+    	if(2 == order.currentStatus){
+    	    $scope.statusList = [
+
+    	                         {
+    	                     	  value:'6',
+    	                          desc:'商家已接单'
+    	                         },
+    	                         {
+    	                          value:'11',
+    	                          desc:'订单取消'
+    	                         }
+    	                     ];
+    	}else if(6 == order.currentStatus){
+    	    $scope.statusList = [
+    	                         {
+    	                          value:'7',
+    	                          desc:'送货中'
+    	                         },
+    	                         {
+    	                          value:'11',
+    	                          desc:'订单取消'
+    	                         }
+    	                     ];
+
+    	}else if(7 == order.currentStatus){
+    	    $scope.statusList = [
+    	                         {
+    	                          value:'8',
+    	                          desc:'已完成'
+    	                         },
+    	                         {
+    	                          value:'11',
+    	                          desc:'订单取消'
+    	                         }
+    	                     ];    		
+    	}
+    }
 	
     orderUpdateFactory.findOrderByUuid({uuid:$scope.uuid},function(response){
     	
@@ -46,7 +89,7 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
     		$scope.order = response;
     		$scope.shippingInfos = $scope.order.shippingInfos;
     		$scope.orderItems = $scope.order.orderItems;
-
+    		initOrderStatus($scope.order);
     	}
 	});
 	
@@ -64,7 +107,7 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
 		var postEntity = new Object();
 		postEntity.status = $scope.status;
 		postEntity.comment = $scope.comment;
-		postEntity.payStatus = $scope.payStatus;
+		postEntity.payStatus = $scope.order.payStatus;
 		postEntity.settAmount = $scope.order.settAmount;
 		orderUpdateFactory.saveShippingInfoByOrderId({uuid: $scope.uuid},postEntity,function(response){				
 			if(response.$resolved){

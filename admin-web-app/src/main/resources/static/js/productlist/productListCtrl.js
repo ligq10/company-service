@@ -43,6 +43,8 @@ productListControllers.controller('productListCtrl',['$scope','loginSession','pr
            $scope.pageSize=PAGESIZE_DEFAULT;
 	       if($scope.search_keyword != undefined){
 	    		search_keyword = $scope.search_keyword;
+	       }else{
+	    	   search_keyword = "";
 	       }  
 	       refreshProductList();
        }

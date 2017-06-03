@@ -401,6 +401,10 @@ public class OrderService {
         		&& PayStatus.YES.getValue().equalsIgnoreCase(shippingInfo.getPayStatus())){
         	order.setPayStatus(shippingInfo.getPayStatus());
         }
+        
+        if(!StringUtils.isEmpty(shippingInfo.getSettAmount())){
+        	order.setSettAmount(shippingInfo.getSettAmount());
+        }
         ordersRepository.save(order);
     }
 }

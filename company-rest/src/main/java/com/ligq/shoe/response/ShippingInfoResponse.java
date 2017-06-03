@@ -1,8 +1,5 @@
 package com.ligq.shoe.response;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.util.StringUtils;
 
@@ -13,7 +10,7 @@ public class ShippingInfoResponse extends ResourceSupport{
 	
     private String uuid;
 
-    private String status;
+    private Integer status;
     
     private String statusDesc;
     
@@ -30,22 +27,15 @@ public class ShippingInfoResponse extends ResourceSupport{
     private String createdDate;
 
     private String waiterId;    
-    
-
-	public String getStatus() {
-		if(StringUtils.isEmpty(status)){
-			this.status = "";
-		}
+	
+	public Integer getStatus() {
 		return status;
 	}
 
 	public void setStatus(Integer status) {
-		if(status==null){
-			this.status="";
-		}
-		this.status = String.valueOf(status.intValue());
-	}	
-	
+		this.status = status;
+	}
+
 	public String getStatusDesc() {
 		return statusDesc;
 	}
@@ -138,8 +128,5 @@ public class ShippingInfoResponse extends ResourceSupport{
 		this.serviceEmployeeId = serviceEmployeeId;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
     
 }

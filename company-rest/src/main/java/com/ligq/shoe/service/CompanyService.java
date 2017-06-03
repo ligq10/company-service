@@ -3,7 +3,6 @@ package com.ligq.shoe.service;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +42,6 @@ import com.ligq.shoe.constants.DeleteStatus;
 import com.ligq.shoe.constants.NumberToChinese;
 import com.ligq.shoe.controller.CompanyController;
 import com.ligq.shoe.entity.Company;
-import com.ligq.shoe.entity.Employee;
 import com.ligq.shoe.mysql.dynamic.Criteria;
 import com.ligq.shoe.mysql.dynamic.Restrictions;
 import com.ligq.shoe.repository.CompanyRepository;

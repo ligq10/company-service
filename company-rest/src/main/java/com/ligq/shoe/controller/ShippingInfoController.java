@@ -28,7 +28,7 @@ import com.ligq.shoe.service.ShippingInfoService;
 @Controller
 public class ShippingInfoController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShippingInfoController.class);
     @Autowired
     private ShippingInfoService shippingInfoService;
     

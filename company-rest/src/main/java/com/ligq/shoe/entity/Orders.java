@@ -36,7 +36,7 @@ public class Orders {
 	@Column(name = "order_no",length=128)
 	private String orderNo;
 
-	@Column(name = "current_status",columnDefinition="text")
+	@Column(name = "current_status")
 	private Integer currentStatus;
 
 	@Column(name = "comment",columnDefinition="text")

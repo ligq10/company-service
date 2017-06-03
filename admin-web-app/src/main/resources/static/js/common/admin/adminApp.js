@@ -4,7 +4,8 @@
 'use strict';
 var adminApp=angular.module('adminApp',['ui.router','ui.tree','angularFileUpload','personnelAddControllers','orderListControllers','orderUpdateControllers',
                   'personnelListControllers','personnelUpdateControllers','companyUpdateControllers','categoryListControllers','categoryAddControllers',
-                  'categoryUpdateControllers','productListControllers','productAddControllers','productUpdateControllers']);
+                  'categoryUpdateControllers','productListControllers','productAddControllers','productUpdateControllers',
+                  'newsListControllers','newsAddControllers','newsUpdateControllers','caseListControllers','caseAddControllers','caseUpdateControllers']);
 adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$rootScopeProvider){
     $httpProvider.defaults.headers.common['X-Token'] = $.cookie('X-Token');
 
@@ -127,6 +128,48 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
             permission:'FEEDBACK_UPDATE',
             father:'FEEDBACK_AUDIT_MANAGER'             
         })*/
+        .state('caselist',{
+            url:"/caselist",
+            templateUrl:'templates/case/case-list.html',
+            controller:'caseListCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('caseadd',{
+            url:"/caseadd",
+            templateUrl:'templates/case/case-add.html',
+            controller:'caseAddCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('caseupdate',{
+            url:"/caseupdate/:uuid",
+            templateUrl:'templates/case/case-update.html',
+            controller:'caseUpdateCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('newslist',{
+            url:"/newslist",
+            templateUrl:'templates/news/news-list.html',
+            controller:'newsListCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('newsadd',{
+            url:"/newsadd",
+            templateUrl:'templates/news/news-add.html',
+            controller:'newsAddCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
+        .state('newsupdate',{
+            url:"/newsupdate/:uuid",
+            templateUrl:'templates/news/news-update.html',
+            controller:'newsUpdateCtrl',
+            permission:'PERSONNEL_UPDATE',
+            father:'PERSONNEL_MANAGER'
+        })
         .state('orderlist',{
             url:"/orderlist",
             templateUrl:'templates/order/order-list.html',

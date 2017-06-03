@@ -1,0 +1,136 @@
+<html>
+<head>
+    <!-- Load CSS files-->
+    <script src="js/personneladd/personnel.js"></script>
+    <link href="css/templateCss/personneladd/personneladd.css" rel="stylesheet" th:href="@{/css/templateCss/personneladd/personneladd.css}"/>
+    
+    
+</head>
+	<body>
+		<div class="main">
+			<div class="list-title">
+				<span ><img class="home-img" ng-src="images/home_icon.png"/></span>
+				<span class="navigate-header">公司管理>>新闻列表>>新增新闻</span>
+			</div>
+			<div class="terminal-add-total">
+				<form class="form-horizontal" name="newsAddFrom" role="form" ng-submit="newsAdd()" novalidate>
+					<!-- 登录账号 -->
+				    <div class="form-group">
+                        <label class="require-mark-style">*</label>
+				        <label class="col-sm-2">标题</label>
+				        <div class="col-sm-4">
+				            <input type="text" class="form-control" name="title" required ng-model="news.title"/>
+				        </div>
+                        <span class="prompt_span" ng-show="newsAddFrom.news.title.$invalid">必填&nbsp;&nbsp;</span>
+                        <span ng-show="news.title">
+				        	<span class="prompt_ok_span" ng-show="newsAddFrom.news.title.$valid"><span class="glyphicon glyphicon-ok" ng-hide="!id_error_ishidden"></span></span>
+				        </span>
+				    </div>
+
+
+				    <!-- 评分证据 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">图片上传</label>
+				        <div class="col-sm-4">
+				        	<span>
+                      			<input type="file" class="form-control clear-border" multiple="multiple" ng-model="image" id="image" name="image" ng-file-select/>
+							</span>
+				        	<span class="btn_group">
+				            	<button type="button" ng-click="imageUpload()" class="btn btn-primary">上传</button>
+						    	<button type="button" ng-click="clearImage()" class="btn btn-default">清空</button>
+						    	<span class="prompt_span">{{addSuccess}}</span>
+							</span>
+				        </div>
+				    </div>
+
+				    <div class="form-group">
+					    <label class="col-sm-1">图片</label>
+						<div id="myCarousel" ng-show="slides.length >0" class="col-md-8 carousel slide">
+						   <!-- 轮播（Carousel）指标 -->
+						   <ol class="carousel-indicators">		   
+	  						  <li data-target="#myCarousel" ng-repeat="item in slides" data-slide-to="{{$index}}" ng-class="{active:$index==0}"></li>
+	 						</ol>   
+						   <!-- 轮播（Carousel）项目 -->
+						   <div class="carousel-inner">
+						      <div class="item" ng-class="{active:$index==0}"  ng-repeat="item in slides" style="text-align:center">
+						         <a ng-href="{{item.url}}" target="_bank"><img ng-src="{{item.url}}" style="margin:0px auto" alt="product image"></img></a>
+						      </div>
+						   </div>
+						   <!-- 轮播（Carousel）导航 -->
+						   <a class="left carousel-control" href="javascript:void(0);" ng-click="prev()" role="button" data-slide="prev">
+						      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						      <span class="sr-only">Previous</span>
+						   </a>
+						   <a class="right carousel-control" href="javascript:void(0);" ng-click="next()" role="button" data-slide="next">
+						      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						      <span class="sr-only">Next</span>
+						   </a>					      
+						   <!-- 控制按钮 -->
+	<!-- 					   <div style="text-align:center;">
+						      <input type="button" class="btn start-slide" value="Start">
+						      <input type="button" class="btn pause-slide" value="Pause">
+						      <input type="button" class="btn prev-slide" value="Previous Slide">
+						      <input type="button" class="btn next-slide" value="Next Slide">
+						      <input type="button" class="btn slide-one" value="Slide 1">
+						      <input type="button" class="btn slide-two" value="Slide 2">            
+						      <input type="button" class="btn slide-three" value="Slide 3">
+						   </div> -->
+						</div> 				    
+					</div>
+
+
+				    <!-- 备注 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">简介</label>
+				        <div class="col-sm-4">
+				            <textarea  id="intro" name="intro" type="text" class="form-control" rows="6" maxlength="256" ng-model="news.intro"></textarea>
+				        </div>
+				        <span class="prompt_span personnel_prompt_textarea" ng-show="newsAddFrom.news.intro.$dirty && newsAddFrom.news.intro.$invalid">不能超过256个字符</span>
+				        <span ng-show="news.intro">
+				        <span class="prompt_ok_span" ng-show="newsAddFrom.news.intro.$dirty && newsAddFrom.news.intro.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+				    <!-- 备注 -->
+				    <div class="form-group">
+                        <label class="require-mark-style">*</label>
+				        <label  class="col-sm-2">内容</label>
+				        <div class="col-sm-4">
+				            <textarea  id="newscontent" name="newscontent" type="text" required class="form-control" rows="6" cols="50" maxlength="10000" ng-model="news.content"></textarea>
+				        </div>
+				        <span class="prompt_span personnel_prompt_textarea" ng-show="newsAddFrom.news.content.$dirty && newsAddFrom.news.content.$invalid">不能超过10000个字符</span>
+				        <span ng-show="news.content">
+				        <span class="prompt_ok_span" ng-show="newsAddFrom.news.contentn.$dirty && newsAddFrom.news.content.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+
+
+				    <!-- 备注 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">备注</label>
+				        <div class="col-sm-4">
+				            <textarea  id="description" name="description" type="text" class="form-control" rows="6" maxlength="10000" ng-model="news.description"></textarea>
+				        </div>
+				        <span class="prompt_span personnel_prompt_textarea" ng-show="newsAddFrom.news.description.$dirty && newsAddFrom.news.description.$invalid">不能超过10000个字符</span>
+				        <span ng-show="news.description">
+				        <span class="prompt_ok_span" ng-show="newsAddFrom.news.description.$dirty && newsAddFrom.news.description.$valid"><span class="glyphicon glyphicon-ok"></span></span>
+				        </span>
+				    </div>
+
+				    
+				    <div class="form-group">
+				        <div class="col-sm-2"></div>
+				        <div class="col-sm-4 btn-group">
+				        	<span class="btn_group">
+				            	<button type="submit" ng-disabled="!(newsAddFrom.$valid)" class="btn btn-primary">保存</button>
+						    	<button type="button" ui-sref="newslist" class="btn btn-default">返回</button>
+						    	<span class="prompt_span">{{addSuccess}}</span>
+							</span>
+				        </div>
+				    </div>
+				</form>
+			</div>
+		</div>	
+	</body>
+</html>

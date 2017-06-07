@@ -42,6 +42,7 @@ import com.ligq.shoe.entity.Orders;
 import com.ligq.shoe.entity.ProductPrice;
 import com.ligq.shoe.entity.ShippingInfo;
 import com.ligq.shoe.mysql.dynamic.Criteria;
+import com.ligq.shoe.mysql.dynamic.Criterion;
 import com.ligq.shoe.mysql.dynamic.Restrictions;
 import com.ligq.shoe.repository.OrderRepository;
 import com.ligq.shoe.repository.OrderToProductItemRepository;
@@ -313,9 +314,14 @@ public class OrderService {
 		Criteria<Orders> criteria = new Criteria<Orders>(); 
 		
 		if(StringUtils.isEmpty(keyword) == false){
-			criteria.add(Restrictions.like("orderNo", keyword, true));
-			criteria.add(Restrictions.like("customerName", keyword, true));
-			criteria.add(Restrictions.like("customerTel", keyword, true));
+			Criterion criterionOrderNo = Restrictions.like("orderNo", keyword, true);
+			Criterion criterionName = Restrictions.like("customerName", keyword, true);
+			Criterion criterionTel = Restrictions.like("customerTel", keyword, true);
+			Criterion criterionOr = Restrictions.or(criterionOrderNo,criterionName,criterionTel);
+			criteria.add(criterionOr);
+			//criteria.add(Restrictions.like("orderNo", keyword, true));
+			//criteria.add(Restrictions.like("customerName", keyword, true));
+			//criteria.add(Restrictions.like("customerTel", keyword, true));
 		}
 
 		

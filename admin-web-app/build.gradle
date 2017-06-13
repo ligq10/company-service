@@ -1,9 +1,9 @@
 version = '1.0'
+def gitTag  = 'git describe --tags'.execute([], project.rootDir).text.trim()
 jar {
-    baseName = 'shoe-web-app'+"-$profile"
-    version = '0.1.0'
+    baseName = 'admin-web-app'+"-$profile"+'-tag'
+    version = gitTag
 }
-
 dependencies {
     compile(
             "org.springframework.boot:spring-boot-starter-web",

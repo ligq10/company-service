@@ -17,24 +17,20 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
                          	desc:'待确认'
                          },
                          {
-                  	    value:'2',
+                            value:'2',
                          	desc:'已确认'
                          },
                          {
-                     	    value:'6',
-                          desc:'商家已接单'
+                        	value:'7',
+                            desc:'送货中'
                          },
                          {
-                          value:'7',
-                          desc:'送货中'
+                        	 value:'8',
+                        	 desc:'已完成'
                          },
                          {
-                          value:'8',
-                          desc:'已完成'
-                         },
-                         {
-                          value:'11',
-                          desc:'订单取消'
+                        	 value:'11',
+                        	 desc:'订单取消'
                          }
 
                      ];
@@ -46,18 +42,6 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
     	}
     	
     	if(2 == order.currentStatus){
-    	    $scope.statusList = [
-
-    	                         {
-    	                     	  value:'6',
-    	                          desc:'商家已接单'
-    	                         },
-    	                         {
-    	                          value:'11',
-    	                          desc:'订单取消'
-    	                         }
-    	                     ];
-    	}else if(6 == order.currentStatus){
     	    $scope.statusList = [
     	                         {
     	                          value:'7',

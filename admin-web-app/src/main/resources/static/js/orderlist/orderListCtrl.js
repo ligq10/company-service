@@ -25,10 +25,6 @@ orderListControllers.controller('orderListCtrl',['$scope','loginSession','orderL
                                	desc:'已确认'
                                },
                                {
-	                       	    value:'6',
-	                            desc:'商家已接单'
-	                           },
-                               {
                                 value:'7',
                                 desc:'送货中'
                                },

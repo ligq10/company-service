@@ -362,6 +362,20 @@ public class ProductPriceService {
         				DateUtils.composeUTCTime(category.getCreatedTime()));
         		productPriceResponse.setCateory(categoryResponse);
             }
+            
+            List<ProductPriceToImage> productPriceToImageList = productPriceToImageRepository
+            		.findByProductId(productPrice.getUuid());
+            if(!CollectionUtils.isEmpty(productPriceToImageList)){
+                List<ProductImage> productImageList = new ArrayList<ProductImage>();
+                for(ProductPriceToImage productPriceToImage : productPriceToImageList){
+                	ProductImage productImage = new ProductImage();
+                	productImage.setImageUuid(productPriceToImage.getImageId());
+                	productImage.setUrl("/companyserver/images/show/"+productPriceToImage.getImageId());
+                	productImageList.add(productImage);
+                }
+                productPriceResponse.setImages(productImageList);
+            }
+            
             result.add(productPriceResponse);
          }
        // Page<ProductPriceResponse> content = new PageImpl(result,pageable,productPricePage.getTotalElements());

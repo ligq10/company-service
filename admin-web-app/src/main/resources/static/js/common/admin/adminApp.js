@@ -15,7 +15,7 @@ adminApp.config(function($stateProvider, $urlRouterProvider, $httpProvider,$root
     $stateProvider.
         state('index', {
             url: "/index",
-            template:"欢迎使用中国鞋材供应网",
+            template:"欢迎使用",
             permission: 'PASS'
         })
         .state('unauthorized', {

@@ -55,7 +55,7 @@ newsListControllers.controller('newsListCtrl',['$scope','loginSession','newsList
 
     		   Message.confirm(
 		   		  {
-		   		    msg: "确定要删除该人员？",
+		   		    msg: "确定要删除该？",
 		   		    title:"提示",
 		   		  })
 		   		 .on( function (e) {

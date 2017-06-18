@@ -31,6 +31,8 @@ public class ProductPriceResponse extends ResourceSupport{
 	 
 	private String description;
 	
+	private String content;
+	
 	private String status;
 	
 	private String createdTime;
@@ -101,6 +103,14 @@ public class ProductPriceResponse extends ResourceSupport{
 		this.description = description;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	public String getStatus() {
 		return status;
 	}

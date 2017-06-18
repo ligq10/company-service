@@ -15,6 +15,8 @@ public class AddProductPriceRequest {
 
 	private Double price;
 
+	private String content;
+	
 	private String companyId;
 	
 	private String categoryId;
@@ -107,6 +109,14 @@ public class AddProductPriceRequest {
 
 	public void setImages(List<ProductImage> images) {
 		this.images = images;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

@@ -31,6 +31,8 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 	 
 	private String description;
 	
+	private String content;
+	
 	private String status;
 	
 	private String isdeleted;
@@ -179,6 +181,14 @@ public class ProductPriceDetailResponse extends ResourceSupport{
 
 	public void setCateory(CategoryDetailResponse cateory) {
 		this.cateory = cateory;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}	
 
 }

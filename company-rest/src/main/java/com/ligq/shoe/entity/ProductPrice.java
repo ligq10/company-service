@@ -31,7 +31,10 @@ public class ProductPrice {
 	
 	@Column(name = "unit",length=256)
 	private String unit;
-	
+
+	@Column(name = "content",columnDefinition="text")
+	private String content;
+
 	@Column(name = "description",length=512)
 	private String description;
 	
@@ -174,4 +177,11 @@ public class ProductPrice {
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
 	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 }

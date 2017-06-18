@@ -19,6 +19,8 @@ public class UpdateProductPriceRequest {
 	
 	private String description;
 	
+	private String content;
+	
 	private String icon;
 		
 	private String status;
@@ -88,6 +90,14 @@ public class UpdateProductPriceRequest {
 
 	public void setImages(List<ProductImage> images) {
 		this.images = images;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

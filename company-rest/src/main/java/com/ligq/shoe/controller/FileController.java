@@ -104,6 +104,32 @@ public class FileController {
         		new Resource<ImageResponse>(imageResponse), HttpStatus.OK);
 
 	}
+
+	@RequestMapping(value = "/images/{filename}", method = RequestMethod.POST,
+			produces = "application/hal+json")
+	public HttpEntity<?> addImage(
+			@PathVariable String filename,
+			@RequestParam(value = "file") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		if(null == file || file.isEmpty()){
+			logger.error("image is empty");
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+		
+		ResponseEntity<?> responseEntity =  null;		
+		try{
+			responseEntity = imageService.save(filename,file,request,response);
+	    } catch (Exception e) {
+			logger.error(e.getMessage(),e);
+            return new ResponseEntity<HttpStatus>(
+            		HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return responseEntity;
+
+	}
+
 	
 	@RequestMapping(value = "/images/show/{uuid}")
 	public void getImage(

@@ -40,8 +40,23 @@ orderUpdateControllers.controller('orderUpdateCtrl',['$scope','$timeout','$state
     		|| null == order){
     		return false;
     	}
-    	
-    	if(2 == order.currentStatus){
+    	if(1 == order.currentStatus){
+    	    $scope.statusList = [
+    	                         {
+    	                            value:'2',
+    	                          	desc:'已确认'
+    	                          },    	                         
+    	                         {
+    	                          value:'7',
+    	                          desc:'送货中'
+    	                         },
+    	                         {
+    	                          value:'11',
+    	                          desc:'订单取消'
+    	                         }
+    	                     ];
+    		
+    	}else if(2 == order.currentStatus){
     	    $scope.statusList = [
     	                         {
     	                          value:'7',

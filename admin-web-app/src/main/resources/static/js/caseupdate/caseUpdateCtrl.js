@@ -19,12 +19,30 @@ caseUpdateControllers.controller('caseUpdateCtrl',['$scope','$state','$timeout',
                     //"http://img02.tooopen.com/images/20151231/tooopen_sy_153270994272.jpg"
                     //"/companyserver/images/show/a8b6b36b-02bf-4779-bb6b-3adf00bd3fb2"
                     ];
-
+    
+  //初始化富文本编辑器
+    var ue = UE.getEditor("detailEditor");
+    $scope.$on('$destroy', function() {
+        ue.destroy();
+    });
+    
+  //获取富文本内容
+    function setUeContent() {
+    	ue.ready(function () {
+            ue.setContent($scope.companycase.content, true);
+        })
+    }
+    
+  //获取案例详情
+    function getUeContent() {
+    	$scope.companycase.content = ue.getContent();
+    }
 
     caseUpdateFactory.findCaseById({uuid:$scope.companycase.uuid},function(response){
 		if(response==undefined){
 		}else{
         	$scope.companycase = response;
+        	setUeContent();
         	if(undefined != $scope.companycase.icon
         			&& null != $scope.companycase.icon){
 				$scope.slides.push({
@@ -63,6 +81,7 @@ caseUpdateControllers.controller('caseUpdateCtrl',['$scope','$state','$timeout',
 	 * 新增产品保存
 	 */
 	$scope.caseUpdate=function(){
+		getUeContent();
 		if(undefined != $scope.slides
 				&& null != $scope.slides
 				&& $scope.slides.length > 0){

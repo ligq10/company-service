@@ -38,11 +38,23 @@ newsAddControllers.controller('newsAddCtrl',['$scope','$state','$timeout','$uplo
        // $("#myCarousel").carousel('pause');
 
 	}
+	
+	//初始化富文本编辑器
+    var ue = UE.getEditor("detailEditor");
+    $scope.$on('$destroy', function() {
+        ue.destroy();
+    });
+    
+    //获取新闻详情
+    function getUeContent() {
+    	$scope.news.content = ue.getContent();
+    }
 		
 	/**
 	 * 新增产品保存
 	 */
 	$scope.newsAdd=function(){
+		getUeContent();
 		if(undefined != $scope.slides
 				&& null != $scope.slides
 				&& $scope.slides.length > 0){

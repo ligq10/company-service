@@ -35,7 +35,6 @@
 				        	<span class="btn_group">
 				            	<button type="button" ng-click="imageUpload()" class="btn btn-primary">上传</button>
 						    	<button type="button" ng-click="clearImage()" class="btn btn-default">清空</button>
-						    	<span class="prompt_span">{{addSuccess}}</span>
 							</span>
 				        </div>
 				    </div>
@@ -89,7 +88,7 @@
 				    </div>
 
 				    <!-- 备注 -->
-				    <div class="form-group">
+				    <!-- <div class="form-group">
                         <label class="require-mark-style">*</label>
 				        <label  class="col-sm-2">内容</label>
 				        <div class="col-sm-4">
@@ -99,6 +98,14 @@
 				        <span ng-show="news.content">
 				        <span class="prompt_ok_span" ng-show="newsAddFrom.news.contentn.$dirty && newsAddFrom.news.content.$valid"><span class="glyphicon glyphicon-ok"></span></span>
 				        </span>
+				    </div> -->
+				    
+				    <!-- 产品详情 -->
+				    <div class="form-group">
+				        <label  class="col-sm-2">内容</label>
+				        <div class="col-sm-8" id="detailEditor" name="detailEditor">
+				            
+				        </div>
 				    </div>
 
 

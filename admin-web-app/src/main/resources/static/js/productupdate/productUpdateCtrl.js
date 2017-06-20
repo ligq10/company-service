@@ -19,6 +19,12 @@ productUpdateControllers.controller('productUpdateCtrl',['$scope','$state','$tim
                     //"/companyserver/images/show/a8b6b36b-02bf-4779-bb6b-3adf00bd3fb2"
                     ];
     $scope.categoryList = [];	
+    
+    //初始化富文本编辑器
+    var ue = UE.getEditor("detailEditor");
+    $scope.$on('$destroy', function() {
+        ue.destroy();
+    });
 
 	//权限菜单
 /*    productUpdateFactory.queryAllCategories(function(response){
@@ -36,11 +42,24 @@ productUpdateControllers.controller('productUpdateCtrl',['$scope','$state','$tim
 			
 		}
     });*/
+    
+  //获取富文本内容
+    function setUeContent() {
+    	ue.ready(function () {
+            ue.setContent($scope.product.content, true);
+        })
+    }
+    
+  //获取案例详情
+    function getUeContent() {
+    	$scope.product.content = ue.getContent();
+    }
 
     productUpdateFactory.findProductById({uuid:$scope.product.uuid},function(response){
 		if(response==undefined){
 		}else{
         	$scope.product = response;
+        	setUeContent();
         	if(undefined != $scope.product.images
         			&& null != $scope.product.images){
             	$scope.slides = $scope.product.images;
@@ -103,6 +122,7 @@ productUpdateControllers.controller('productUpdateCtrl',['$scope','$state','$tim
 	 */
 	$scope.productUpdate=function(){
 		$scope.product.images = $scope.slides; 
+		getUeContent();
 		productUpdateFactory.update({uuid:$scope.product.uuid},$scope.product,function(response){
             if(response.$resolved){
              

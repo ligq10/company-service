@@ -38,11 +38,22 @@ caseAddControllers.controller('caseAddCtrl',['$scope','$state','$timeout','$uplo
        // $("#myCarousel").carousel('pause');
 
 	}
+	
+	//初始化富文本编辑器
+    var ue = UE.getEditor("detailEditor");
+    $scope.$on('$destroy', function() {
+        ue.destroy();
+    });
+    //获取案例详情
+    function getUeContent() {
+    	$scope.companycase.content = ue.getContent();
+    }
 		
 	/**
 	 * 新增产品保存
 	 */
 	$scope.caseAdd=function(){
+		getUeContent();
 		if(undefined != $scope.slides
 				&& null != $scope.slides
 				&& $scope.slides.length > 0){

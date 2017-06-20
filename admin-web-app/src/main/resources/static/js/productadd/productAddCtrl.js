@@ -17,7 +17,17 @@ productAddControllers.controller('productAddCtrl',['$scope','$state','$timeout',
                     //"/companyserver/images/show/a8b6b36b-02bf-4779-bb6b-3adf00bd3fb2"
                     ];
     $scope.categoryList = [];	
-
+    
+    //初始化富文本编辑器
+    var ue = UE.getEditor("detailEditor");
+    $scope.$on('$destroy', function() {
+        ue.destroy();
+    });
+    //获取产品详情信息
+    function getUeContent() {
+    	$scope.product.content = ue.getContent();
+    }
+    
 	//权限菜单
     productAddFactory.queryAllCategories(function(response){
 		$scope.categoryList = [];
@@ -61,6 +71,7 @@ productAddControllers.controller('productAddCtrl',['$scope','$state','$timeout',
 	 * 新增产品保存
 	 */
 	$scope.productAdd=function(){
+		getUeContent();
 		$scope.product.images = $scope.slides; 
 		productAddFactory.create({uuid:$scope.companyId},$scope.product,function(response){
             if(response.$resolved){
